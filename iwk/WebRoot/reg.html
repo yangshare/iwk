@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>i微课</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="images/video_128px_1188198_easyicon.net.ico" type="image/x-icon" rel="shortcut icon" />
+		<link rel="apple-touch-icon" href="images/video_128px_1188198_easyicon.net.ico">
+
+		<script src="js/jquery/jquery.min.js"></script>
+
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<link href="css/responsive.css" rel="stylesheet">
+		<link href="css/font-awesome.min.css" rel="stylesheet">
+		<link href="css/colors.css" rel="stylesheet">
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+
+	<body>
+		<!-- 顶部导航**************************************************** -->
+		<!-- END 导航栏================================================== -->
+		<!--登录框-->
+		<div class="modal fade in" id="login-modal">
+			<div class="modal-dialog login-modal">
+				<div class="modal-content">
+					<div name="login_form">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title">会员登录</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="login_username" class="control-label">用户名:</label>
+								<input name="username" type="text" value="" id="login_username" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="login_password" class="control-label">密码:</label>
+								<input name="password" type="password" value="" id="login_password" class="form-control">
+							</div>
+							<a href="#/lost" id="lost_password">忘记用户名或密码？</a><br>
+							<a href="#/confirm" id="confirmation_email">没有收到确认邮件？</a>
+						</div>
+						<div class="modal-footer">
+							<button name="submit_login" id="login_submit" class="btn btn-primary">登录</button>
+							<a href="reg.html" class="btn btn-secondary">注册</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--顶部-->
+		<div class="top-nav">
+			<div class="container">
+				<ul class="top-menu">
+					<div class="pull-left">
+
+						<li><a data-toggle="modal" href="#" style="color:#2a9fd6;">手机应用</a></li>
+					</div>
+					<div id="showName" class="pull-right">
+						<li><a href="reg.html" rel="nofollow">注册</a></li>
+						<li><a data-toggle="modal" href="#/#login-modal">登录</a></li>
+					</div>
+					<div class="clearfix"></div>
+				</ul>
+			</div>
+		</div>
+		<!--菜单栏-->
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="home.html"><img src="images/LOGO.png"></a>
+				</div>
+				<div class="navbar-collapse navbar-inverse-collapse collapse" style="height: 1px;">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="home.html">万象百科</a></li>
+						<li><a href="#/albums">课堂同步</a></li>
+						<li><a href="#/categories">社区</a></li>
+						<li><a href="#/community">关于</a></li>
+						<li class="dropdown">
+							<a href="#/#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i></a>
+							<ul class="dropdown-menu search-dropdown-menu">
+								<form class="form-inline" name="search" id="search_form" method="get" action="#/search">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="搜索" name="search_query" id="search_query" value="">
+
+										<span class="input-group-btn">
+											<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+										</span>
+									</div>
+								</form>
+							</ul>
+						</li>
+						<li>
+							<button type="button" class="btn btn-primary navbar-btn m-l-15 m-r-15" onclick="goUpload()">上传</button>
+						</li>
+					</ul>
+
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+		<!-- END 导航栏================================================== -->
+		<!--  警告框================================================== -->
+		<div class="alert alert-warning alert-dismissible" role="alert" style="display: none;text-align: center;">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<strong>Warning!</strong> 别瞎搞，认真填写.
+		</div>
+		<!-- 主要内容**************************************************** -->
+		<div id="wrapper" style="padding-bottom: 50px;">
+
+			<div class="container">
+				<h1 align="center">用户注册</h1>
+				<form action="http://localhost:8080/iwk/wUser_addUser" id="form-regist" enctype="multipart/form-data" method="post">
+
+					<div class="form-group">
+						<label for="user_icon"><span class="glyphicon glyphicon-user"></span>&nbsp;头像</label>
+						<input type="file" name="image" accept="image/*">
+						<p class="help-block">请选择本地图片作为头像.</p>
+					</div>
+
+					<div class="form-group">
+						<label for="nickname">昵称*</label>
+						<input type="text" class="form-control validation-empty" name="name" id="name" placeholder="nickname">
+					</div>
+					<div class="form-group">
+						<label for="password">密码*</label>
+						<input type="password" class="form-control validation-empty" name="pwd" id="pwd" placeholder="Password">
+					</div>
+					<div class="form-group">
+						<label for="question">密保问题*</label>
+						<div class="radio">
+							<label>
+							    <input type="radio" name="question"  value="option1" checked>
+							   你的乳名？
+							  </label>
+						</div>
+						<div class="radio">
+							<label>
+							    <input type="radio" name="question"  value="option2">
+							    你最爱的人的名字？
+							  </label>
+						</div>
+						<div class="radio">
+							<label>
+							    <input type="radio" name="question"  value="option3">
+							    你最喜欢的电影名？
+							  </label>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label for="answer">密保答案*</label>
+						<input type="text" class="form-control validation-empty" name="answer" id="answer" placeholder="answer">
+					</div>
+
+					<hr class="feature-divider">
+
+					<div class="form-group">
+						<label for="school">学校*</label>
+						<input type="text" class="form-control validation-empty" name="school" id="school" placeholder="school">
+					</div>
+					<div class="form-group">
+						<label for="college">学院*</label>
+						<input type="text" class="form-control validation-empty" name="college" id="college" placeholder="college">
+					</div>
+					<div class="form-group">
+						<label for="professional">专业*</label>
+						<input type="text" class="form-control validation-empty" name="professional" id="professional" placeholder="professional">
+					</div>
+					<div class="form-group">
+						<label for="clazz">班级*</label>
+						<input type="text" class="form-control validation-empty" name="clazz" id="clazz" placeholder="class">
+					</div>
+					<div class="form-group">
+						<label for="sno">学号*</label>
+						<input type="text" class="form-control validation-empty" name="sno" id="sno" placeholder="Student-ID">
+					</div>
+
+					<hr class="feature-divider">
+
+					<div class="form-group">
+						<label for="sname">真实姓名*</label>
+						<input type="text" class="form-control validation-empty" name="sname" id="sname" placeholder="real-name">
+					</div>
+					<div class="form-group">
+						<label for="ssex">性别*</label>
+						<input type="text" class="form-control validation-empty" name="ssex" id="ssex" placeholder="sex">
+					</div>
+					<div class="form-group">
+						<label for="e-mail">邮箱*</label>
+						<input type="email" class="form-control validation-empty" name="email" id="email" placeholder="e-mail">
+					</div>
+
+					<div class="form-group">
+						<label for="introduce">个人简介</label>
+						<textarea class="form-control validation-empty" name="introduce" id="introduce" placeholder="(字数小于500)" maxlength="500"></textarea>
+					</div>
+
+					<div class="checkbox">
+						<label>
+				      <input type="checkbox" id="remenberMe"> 记住密码
+				    </label>
+					</div>
+					<button id="regist-submit" type="submit" class="btn btn-default">提交</button>
+				</form>
+				<br />
+				<br />
+				<br />
+				<!-- 底部**************************************************** -->
+				<div class="footer-container">
+
+					<div class="footer">
+						<div class="container">
+							<div class="hidden-xs">
+								<div class="pull-left">
+									<span>版权所有 © 2016</span> yangshare
+								</div>
+								<div class="pull-right">
+									Powered by <a target="_blank" href="http://www.yangshare.com">yangshare</a> <a href="#/static/faq" rel="nofollow">帮助</a> / <a href="#/feedback" rel="nofollow">意见</a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="visible-xs"><span>版权所有 © 2016</span> <a target="_blank" href="http://www.yangshare.com">yangshare</a><br>Powered by <a target="_blank" href="http://www.yangshare.com">yangshare</a><br><a href="#/static/faq" rel="nofollow">帮助</a> / <a href="#/feedback" rel="nofollow">意见</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/jquery/jquery-1.11.1.min.js"></script>
+		<script src="js/bootstrap/bootstrap.min.js"></script>
+		<script src="js/register.js"></script>
+		<script src="js/validations.js"></script>
+		<script>
+			$(function() {
+				//非空验证
+				$(".validation-empty").blur(function() {
+					//非空验证，参数说明:当前组件，关闭按钮，提交按钮
+					if (validationEmpty(this, $("#remenberMe"), $("#regist-submit"))) {
+						console.log("true");
+						//用户名存在验证
+						if($(this).attr("id")=="name"){
+							queryUserIsExisted($(this).val());
+						}
+						
+					} else {
+						console.log("false");
+					}
+				});
+
+				//提交表单
+				$("#regist-submit").click(function() {
+
+					if ("name=&pwd=&question=option1&answer=&school=&college=&professional=&clazz=&sno=&sname=&ssex=&email=&introduce=" == $("#form-regist").serialize().toString()) {
+						$(".alert-warning").show(1000);
+						$('body,html').animate({
+							scrollTop: 0
+						}, 200);
+
+						return false;
+					} else {
+						sessionStorage.setItem("sno", $("#sno").val());
+						return true;
+					}
+
+				});
+				//获取radio组选择数据
+				function getRadios(radiosq) {
+					for (var i = 0; i < radiosq.length; i++) {
+						if (radiosq[i].checked) {
+							//						console.log("当前选中的为：" + radiosq[i].value);
+							return radiosq[i].value;
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>

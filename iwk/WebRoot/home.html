@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<title>i微课 </title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+		<meta name="robots" content="index, follow">
+		<meta name="revisit-after" content="1 days">
+		<meta name="layoutmode" content="standard">
+		<meta name="keywords" content=" iwk,tube, movies,  videos">
+		<meta name="description" content="iwk short videos">
+
+		<link rel="Shortcut Icon" type="image/ico" href="images/video_128px_1188198_easyicon.net.ico">
+		<link rel="apple-touch-icon" href="images/video_128px_1188198_easyicon.net.ico">
+
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<link href="css/responsive.css" rel="stylesheet">
+		<link href="css/font-awesome.min.css" rel="stylesheet">
+		<link href="css/colors.css" rel="stylesheet">
+
+	</head>
+
+	<body>
+
+		<div class="modal fade in" id="login-modal">
+			<div class="modal-dialog login-modal">
+				<div class="modal-content">
+					<div name="login_form">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title">会员登录</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="login_username" class="control-label">用户名:</label>
+								<input name="username" type="text" value="" id="login_username" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="login_password" class="control-label">密码:</label>
+								<input name="password" type="password" value="" id="login_password" class="form-control">
+							</div>
+							<a href="#/lost" id="lost_password">忘记用户名或密码？</a><br>
+							<a href="#/confirm" id="confirmation_email">没有收到确认邮件？</a>
+						</div>
+						<div class="modal-footer">
+							<button name="submit_login" id="login_submit" class="btn btn-primary">登录</button>
+							<a href="reg.html" class="btn btn-secondary">注册</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="top-nav">
+			<div class="container">
+				<ul class="top-menu">
+					<div class="pull-left">
+
+						<li>
+							<a data-toggle="modal" href="#" style="color:#2a9fd6;">手机应用</a>
+						</li>
+					</div>
+					<div id="showName" class="pull-right">
+						<li>
+							<a href="reg.html" rel="nofollow">注册</a>
+						</li>
+						<li>
+							<a data-toggle="modal" href="#/#login-modal">登录</a>
+						</li>
+					</div>
+					<div class="clearfix"></div>
+				</ul>
+			</div>
+		</div>
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="home.html"><img src="images/LOGO.png"></a>
+				</div>
+				<div class="navbar-collapse navbar-inverse-collapse collapse" style="height: 1px;">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="home.html">万象百科</a>
+						</li>
+						<li>
+							<a href="#/albums">课堂同步</a>
+						</li>
+						<li>
+							<a href="#/categories">社区</a>
+						</li>
+						<li>
+							<a href="#/community">关于</a>
+						</li>
+						<li class="dropdown">
+							<a href="#/#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i></a>
+							<ul class="dropdown-menu search-dropdown-menu">
+								<form class="form-inline" name="search" id="search_form" method="get" action="#/search">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="搜索" name="search_query" id="search_query" value="">
+
+										<span class="input-group-btn">
+											<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+										</span>
+									</div>
+								</form>
+							</ul>
+						</li>
+						<li>
+							<button type="button" class="btn btn-primary navbar-btn m-l-15 m-r-15" onclick="goUpload()">上传</button>
+						</li>
+					</ul>
+
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+		<div id="wrapper" style="padding-bottom: 50px;">
+
+			<div class="container">
+
+				<div class="well ad-body">
+					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+							<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+							<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+							<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+							<li data-target="#carousel-example-generic" data-slide-to="3"></li>
+						</ol>
+
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
+							<div class="item active">
+								<img src="images/Ad/ad1.jpg" alt="广告 " style="text-align:center; margin-bottom:5px;">
+								<div class="carousel-caption">
+									i微课
+								</div>
+							</div>
+							<div class="item">
+								<img src="images/Ad/ad2.jpg" alt="广告 " style="text-align:center; margin-bottom:5px;">
+								<div class="carousel-caption">
+									i微课
+								</div>
+							</div>
+							<div class="item">
+								<img src="images/Ad/ad4.jpg" alt="广告 " style="text-align:center; margin-bottom:5px;">
+								<div class="carousel-caption">
+									i微课
+								</div>
+							</div>
+							<div class="item">
+								<img src="images/Ad/ad5.jpg" alt="广告 " style="text-align:center; margin-bottom:5px;">
+								<div class="carousel-caption">
+									i微课
+								</div>
+							</div>
+
+						</div>
+
+						<!-- Controls -->
+						<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a>
+						<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+
+				<!--热播视频****************************************************************************-->
+				<div class="well well-filters">
+					<div class="pull-left">
+						<h4>热播视频</h4>
+					</div>
+					<div class="pull-right">
+						<a class="btn btn-primary" href="#">more</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="row" id="myPopVideo">
+
+					<div class="col-sm-4 col-md-3 col-lg-3">
+						<div class="well well-sm">
+							<a href="#/video/16576">
+								<div class="thumb-overlay">
+									<img src="images/17.jpg" title="Android开发技巧" alt="Android开发技巧" class="img-responsive ">
+									<div class="duration">
+
+										03:15
+									</div>
+								</div>
+								<span class="video-title title-truncate m-t-5">Android开发技巧</span>
+							</a>
+							<div class="video-views pull-left">
+
+								11 小时 之前
+							</div>
+							<div class="video-views pull-right">
+								49547 人观看
+							</div>
+
+							<div class="clearfix"></div>
+
+						</div>
+					</div>
+
+				</div>
+
+				<!--最新上传视频****************************************************************************-->
+				<div class="well well-filters">
+					<div class="pull-left">
+						<h4>最新上传视频</h4>
+					</div>
+					<div class="pull-right">
+						<a class="btn btn-primary" href="#">more</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="row" id="myLastVideo">
+
+					<div class="col-sm-4 col-md-3 col-lg-3">
+						<div class="well well-sm">
+							<a href="#/video/16576">
+								<div class="thumb-overlay">
+									<img src="images/17.jpg" title="Android开发技巧" alt="Android开发技巧" class="img-responsive ">
+									<div class="duration">
+
+										03:15
+									</div>
+								</div>
+								<span class="video-title title-truncate m-t-5">Android开发技巧</span>
+							</a>
+							<div class="video-views pull-left">
+
+								11 小时 之前
+							</div>
+							<div class="video-views pull-right">
+								49547 人观看
+							</div>
+
+							<div class="clearfix"></div>
+
+						</div>
+					</div>
+
+				</div>
+				<div class="footer-container">
+
+					<div class="footer">
+						<div class="container">
+							<div class="hidden-xs">
+								<div class="pull-left">
+									<span>版权所有 © 2016</span> yangshare
+								</div>
+								<div class="pull-right">
+									Powered by
+									<a target="_blank" href="http://www.yangshare.com">yangshare</a>
+									<a href="#/static/faq" rel="nofollow">帮助</a> /
+									<a href="#/feedback" rel="nofollow">意见</a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="visible-xs"><span>版权所有 © 2016</span>
+								<a target="_blank" href="http://www.yangshare.com">yangshare</a><br>Powered by
+								<a target="_blank" href="http://www.yangshare.com">yangshare</a><br>
+								<a href="#/static/faq" rel="nofollow">帮助</a> /
+								<a href="#/feedback" rel="nofollow">意见</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Bootstrap core JavaScript
+    ================================================== -->
+			<!-- Placed at the end of the document so the pages load faster -->
+			<script src="js/jquery/jquery.min.js"></script>
+			<script src="js/bootstrap/bootstrap.min.js"></script>
+			<script type="text/javascript" src="js/jquery/jquery.avs-0.2.js"></script>
+			<script type="text/javascript" src="js/app.js"></script>
+			<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
+			<script src="js/my/variable.js" type="text/javascript" charset="utf-8"></script>
+			<script>
+				//判断浏览器兼容性
+				if(navigator.userAgent.match(/IEMobile\/10\.0/)) {
+					var msViewportStyle = document.createElement('style');
+					msViewportStyle.appendChild(
+						document.createTextNode(
+							'@-ms-viewport{width:auto!important}'
+						)
+					);
+					document.querySelector('head').appendChild(msViewportStyle);
+				}
+				$(function() {
+					//获取视频列表
+					function getVideos(urls, parentDiv) {
+						$.ajax({
+							type: 'GET',
+							url: urls,
+							dataType: 'jsonp',
+							jsonp: "callback",
+							beforeSend: function() {
+								parentDiv.html('<div class = "col-sm-4 col-md-3 col-lg-3" ><div class = "well well-sm"><img id="loading" src="images/loading_big.gif"/>加载中。。。</div></div>'); //清场
+							},
+							success: function(data) {
+								console.log(JSON.stringify(data));
+								parentDiv.html(''); //清场
+								//循环取出视频对象
+								var video = null;
+								for(var i = 0; i < data.json.length; i++) {
+									video = data.json[i];
+									parentDiv.append('<div class = "col-sm-4 col-md-3 col-lg-3" >' +
+										'<div class = "well well-sm" >' +
+										'<a href = "video.html?id=' + video.id + '&src=' + video.srcs + '" >' +
+										'<div class = "thumb-overlay" >' +
+										'<img src = "' + video.pic + '" title = "' + video.title + '" alt = "' + video.title + '" class = "img-responsive "/>' +
+										'<div class = "duration" >' + video.types + '</div></div>' +
+										'<span class = "video-title title-truncate m-t-5" > ' + video.title + '</span>' +
+										'</a>' +
+										'<div class = "video-views pull-left" >' + video.time + '</div>' +
+										'<div class = "video-views pull-right" >' + video.clicks + ' 人观看</div>' +
+										'<div class = "clearfix" ></div>' +
+										'</div></div>');
+
+								}
+
+							},
+							error: function() {
+								console.log('网络异常');
+							}
+						});
+					}
+					//获取最热视频
+					getVideos(myUrl + 'wVideo_queryPopVideo', $("#myPopVideo"));
+					//获取最新视频
+					getVideos(myUrl + 'wVideo_queryLastVideo',$("#myLastVideo"));
+					
+				});
+			</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- ajax引擎请求action -->
+	<!-- common-fileupload上传文件有文件大小限制，默认 限制为2M。2147483648字节=2GB -->
+	<constant name="struts.multipart.maxSize" value="2147483648"></constant>
+	<package name="iweike" extends="json-default">
+	
+		<!--
+			<action name="wVideo_getAllVideo"
+			class="com.iweike.action.wVideoAction" method="getAllVideo">
+		-->
+		<!--
+			******************************************************
+			*/////////////////////通配action /////////////////////
+			******************************************************
+		-->
+		<action name="*_*" class="com.iweike.action.{1}Action" method="{2}">
+			<result name="success" type="json">
+				<param name="json">json</param>
+				<!--
+					跨域访问的回调函数 <param name="callbackParameter">callback</param>
+				-->
+				<param name="callbackParameter">callback</param>
+			</result>
+			<result name="error">/error.jsp</result>
+		</action>
+	</package>
+</struts>    

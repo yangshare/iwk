@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>i微课</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="images/video_128px_1188198_easyicon.net.ico" type="image/x-icon" rel="shortcut icon" />
+		<link rel="apple-touch-icon" href="images/video_128px_1188198_easyicon.net.ico">
+
+		<script src="js/jquery/jquery.min.js"></script>
+
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<link href="css/responsive.css" rel="stylesheet">
+		<link href="css/font-awesome.min.css" rel="stylesheet">
+		<link href="css/colors.css" rel="stylesheet">
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+
+	<body>
+		<!-- 顶部导航**************************************************** -->
+		<!-- END 导航栏================================================== -->
+		<!--登录框-->
+		<div class="modal fade in" id="login-modal">
+			<div class="modal-dialog login-modal">
+				<div class="modal-content">
+					<div name="login_form">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								×
+							</button>
+							<h4 class="modal-title">
+								会员登录
+							</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="login_username" class="control-label">
+									用户名:
+								</label>
+								<input name="username" type="text" value="" id="login_username" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="login_password" class="control-label">
+									密码:
+								</label>
+								<input name="password" type="password" value="" id="login_password" class="form-control">
+							</div>
+							<a href="#/lost" id="lost_password">忘记用户名或密码？</a>
+							<br>
+							<a href="#/confirm" id="confirmation_email">没有收到确认邮件？</a>
+						</div>
+						<div class="modal-footer">
+							<button name="submit_login" id="login_submit" class="btn btn-primary">
+								登录
+							</button>
+							<a href="reg.html" class="btn btn-secondary">注册</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--顶部-->
+		<div class="top-nav">
+			<div class="container">
+				<ul class="top-menu">
+					<div class="pull-left">
+
+						<li>
+							<a data-toggle="modal" href="#" style="color: #2a9fd6;">手机应用</a>
+						</li>
+					</div>
+					<div id="showName" class="pull-right">
+						<li>
+							<a href="reg.html" rel="nofollow">注册</a>
+						</li>
+						<li>
+							<a data-toggle="modal" href="#/#login-modal">登录</a>
+						</li>
+					</div>
+					<div class="clearfix"></div>
+				</ul>
+			</div>
+		</div>
+		<!--菜单栏-->
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="home.html"><img src="images/LOGO.png">
+					</a>
+				</div>
+				<div class="navbar-collapse navbar-inverse-collapse collapse" style="height: 1px;">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="home.html">万象百科</a>
+						</li>
+						<li>
+							<a href="#/albums">课堂同步</a>
+						</li>
+						<li>
+							<a href="#/categories">社区</a>
+						</li>
+						<li>
+							<a href="#/community">关于</a>
+						</li>
+						<li class="dropdown">
+							<a href="#/#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i>
+							</a>
+							<ul class="dropdown-menu search-dropdown-menu">
+								<form class="form-inline" name="search" id="search_form" method="get" action="#/search">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="搜索" name="search_query" id="search_query" value="">
+
+										<span class="input-group-btn">
+											<button type="submit" class="btn btn-primary">
+												<i class="glyphicon glyphicon-search"></i>
+											</button> </span>
+									</div>
+								</form>
+							</ul>
+						</li>
+						<li>
+							<button type="button" class="btn btn-primary navbar-btn m-l-15 m-r-15" onclick=g oUpload();>
+								上传
+							</button>
+						</li>
+					</ul>
+
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+		<!-- END 导航栏================================================== -->
+		<!--  警告框================================================== -->
+		<div class="alert alert-danger alert-dismissible" role="alert" style="display: none; text-align: center;">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Warning!</strong> 别瞎搞，登录没，信息填完没.
+		</div>
+		<!--  信息框================================================== -->
+		<div class="alert alert-info alert-dismissible" role="alert" style="display: none; text-align: center;">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Info!</strong> 正在上传.
+		</div>
+		<!--  成功框================================================== -->
+		<div class="alert alert-success alert-dismissible" role="alert" style="display: none; text-align: center;">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Well done!</strong> 上传成功.
+		</div>
+		<!-- 主要内容**************************************************** -->
+		<div id="wrapper" style="padding-bottom: 50px;">
+
+			<div class="container">
+				<h1 align="center">
+					视频上传
+				</h1>
+				<div id="form-upload">
+
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="well-sm">
+								<div class="form-group">
+									<label for="user_icon">
+										<span class="glyphicon  glyphicon-envelope"></span>&nbsp;封面
+									</label>
+									<input type="file" id="img_input" name="image" accept="image/*">
+									<div style="background: #848484; width: 100px; height: 10px; margin-top: 5px">
+										<div id="imgProgressNumber" style="background: #428bca; width: 0px; height: 10px"></div>
+									</div>
+									<font id="imgPercent">0%</font>
+									<p class="help-block">
+										请选择本地图片作为视频封面.
+									</p>
+									<img id="showUploadImg" src="" width="100px" />
+								</div>
+								<hr />
+
+								<div class="form-group">
+									<label for="user_icon">
+										<span class="glyphicon  glyphicon-film"></span>&nbsp;视频
+									</label>
+									<input type="file" id="video_input" name="video" accept="video/*">
+									<div style="background: #848484; width: 100px; height: 10px; margin-top: 5px">
+										<div id="videoProgressNumber" style="background: #428bca; width: 0px; height: 10px"></div>
+									</div>
+									<font id="videoPercent">0%</font>
+									<p class="help-block">
+										请选择本地视频文件上传.
+									</p>
+								</div>
+								<button id="file-submit" class="btn btn-default btn-block">
+									上传
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="nickname">
+							视频标题*
+						</label>
+						<input type="text" class="form-control validation-empty" name="title" id="title" placeholder="title">
+					</div>
+
+					<div class="form-group">
+						<label for="question">
+							视频类型*
+						</label>
+						<select id="types" name="types" class="form-control">
+							<option>
+								计算机
+							</option>
+							<option>
+								美术
+							</option>
+							<option>
+								环境建设
+							</option>
+							<option>
+								4
+							</option>
+							<option>
+								5
+							</option>
+						</select>
+
+					</div>
+
+					<div class="form-group">
+						<label for="introduce">
+							视频简介
+						</label>
+						<textarea class="form-control validation-empty" name="introduce" id="introduce" placeholder="(字数小于500)" maxlength="500"></textarea>
+					</div>
+
+					<button id="upload-submit" class="btn btn-default">
+						提交
+					</button>
+				</div>
+				<br />
+				<br />
+				<br />
+				<!-- 底部**************************************************** -->
+				<div class="footer-container">
+
+					<div class="footer">
+						<div class="container">
+							<div class="hidden-xs">
+								<div class="pull-left">
+									<span>版权所有 © 2016</span> yangshare
+								</div>
+								<div class="pull-right">
+									Powered by
+									<a target="_blank" href="http://www.yangshare.com">yangshare</a>
+									<a href="#/static/faq" rel="nofollow">帮助</a> /
+									<a href="#/feedback" rel="nofollow">意见</a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="visible-xs">
+								<span>版权所有 © 2016</span>
+								<a target="_blank" href="http://www.yangshare.com">yangshare</a>
+								<br> Powered by
+								<a target="_blank" href="http://www.yangshare.com">yangshare</a>
+								<br>
+								<a href="#/static/faq" rel="nofollow">帮助</a> /
+								<a href="#/feedback" rel="nofollow">意见</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 提示后台处理模态框 -->
+		<div id="info-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" id="mySmallModalLabel">视频格式转换中，稍等片刻</h4>
+					</div>
+					<div class="modal-body">
+						<img src="images/loading_big.gif" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--END 提示后台处理模态框 -->
+		<script src="js/jquery/jquery-1.11.1.min.js"></script>
+		<script src="js/bootstrap/bootstrap.min.js"></script>
+		<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/register.js"></script>
+		<script src="js/validations.js"></script>
+		<script src="js/my/variable.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			$(function() {
+				//非空验证====================================================================
+				$(".validation-empty")
+					.blur(function() {
+						//非空验证，参数说明:当前组件，关闭按钮，提交按钮
+						if(validationEmpty(this, $("#remenberMe"),
+								$("#upload-submit"))) {
+							console.log("true");
+							//用户名存在验证
+							if($(this).attr("id") == "name") {
+								queryUserIsExisted($(this).val());
+							}
+
+						} else {
+							console.log("false");
+						}
+					});
+
+				//上传文件=====================================================================
+				var imgPercentComplete = 0; //图片上传进度
+				var videoPercentComplete = 0; //视频上传进度
+				var imgFileName = null; //图片文件名
+				var videoFileName = null; //视频文件名
+				var imgfile = null;
+				var videofile = null;
+				var video_input = document.getElementById("video_input");
+				var img_input = document.getElementById("img_input");
+				//存放服务端传回的图片和视频路径
+				var backImgPath = "";
+				var backVideoPath = "";
+				//文件域选择文件时, 执行readFile函数 
+				img_input.addEventListener('change', readImgFile, false);
+				video_input.addEventListener('change', readVideoFile, false);
+				//读取图片
+				function readImgFile() {
+					imgfile = this.files[0];
+					if(2097152 > imgfile.size) { //2兆字节(mb)=2097152字节(b)
+						imgFileName = imgfile.name;
+					} else {
+						img_input.value = "";
+						alert("图片超过2M，不予上传！");
+					}
+				}
+				//读取电影
+				function readVideoFile() {
+					videofile = this.files[0];
+					if(2097152000 > videofile.size) { //2000兆字节(mb)=2097152000字节(b)
+						videoFileName = videofile.name;
+					} else {
+						video_input.value = "";
+						alert("文件超过20M，不予上传！");
+					}
+
+				}
+				//上传视频
+				function uploadVideo() {
+					var xhr = new XMLHttpRequest();
+
+					var fd = new FormData();
+
+					fd.append("upload", videofile);
+
+					//监听事件 
+					xhr.onreadystatechange = function() {
+						if(xhr.readyState == 4 && xhr.status == 200) {
+							console.log(xhr.responseText);
+							backVideoPath = JSON.parse(xhr.responseText).jsonStr;
+							$("#info-modal").modal('hide');
+
+						} else {
+							if(xhr.status == 500) {
+								alert("视频上传失败请重新上传！");
+							}
+
+						}
+					}
+					xhr.upload.addEventListener("progress", uploadVideoProgress, false);
+					//传输开始
+					xhr.addEventListener("loadstart", uploadVideoStart, false);
+					//传输成功完成
+					xhr.addEventListener("load", uploadVideoComplete, false);
+
+					//发送文件和表单自定义参数 
+					xhr.open("POST", "wVideo_uploadVideo", true);
+
+					xhr.send(fd);
+				}
+				//上传封面
+				function uploadImg() {
+					var xhr = new XMLHttpRequest();
+
+					var fd = new FormData();
+
+					fd.append("image", imgfile);
+
+					//监听事件 
+					xhr.onreadystatechange = function() {
+						if(xhr.readyState == 4 && xhr.status == 200) {
+							console.log(xhr.responseText);
+							backImgPath = JSON.parse(xhr.responseText).jsonStr;
+							$("#showUploadImg")[0].setAttribute("src", JSON.parse(xhr.responseText).jsonStr);
+
+						} else {
+							if(xhr.status == 500) {
+								alert("图片上传失败请重新上传！");
+							}
+
+						}
+					}
+					xhr.upload.addEventListener("progress", uploadImgProgress, false);
+					//传输开始
+					xhr.addEventListener("loadstart", uploadImgStart(), false);
+					//传输成功完成
+					xhr.addEventListener("load", uploadImgComplete(), false);
+					//发送文件和表单自定义参数 
+					xhr.open("POST", "wVideo_uploadImg", true);
+
+					xhr.send(fd);
+				}
+				//上传图片开始
+				function uploadImgStart(evt) {
+					//信息框
+					$(".alert-info strong").html("图片");
+					$(".alert-info").show(300);
+					$('body,html').animate({
+						scrollTop: 0
+					}, 200);
+				}
+				//上传图片完成
+				function uploadImgComplete(evt) {
+
+					$(".alert-info").hide();
+					//成功框
+					$(".alert-success strong").html("图片");
+					$(".alert-success").show(300).delay(3000).hide(1000);
+					$('body,html').animate({
+						scrollTop: 0
+					}, 200);
+					//上传图片进度条
+					imgPercentComplete = 100;
+				}
+				//上传视频开始
+				function uploadVideoStart(evt) {
+					//信息框
+					$(".alert-info strong").html("视频");
+					$(".alert-info").show(300);
+					$('body,html').animate({
+						scrollTop: 0
+					}, 200);
+				}
+				//上传视频完成
+				function uploadVideoComplete(evt) {
+					$(".alert-info").hide();
+					//成功框
+					$(".alert-success strong").html("视频");
+					$(".alert-success").show(300).delay(3000).hide(1000);
+					$('body,html').animate({
+						scrollTop: 0
+					}, 200);
+					//上传视频进度条
+					videoPercentComplete = 100;
+
+				}
+				//上传图片进度条
+				function uploadImgProgress(evt) {
+					if(evt.lengthComputable) {
+						//evt.loaded：文件上传的大小 evt.total：文件总的大小   
+						var percentComplete = Math
+							.round((evt.loaded) * 100 / evt.total);
+						imgPercentComplete = percentComplete;
+						//加载进度条，同时显示信息  
+						$("#imgPercent").html(percentComplete + '%')
+						$("#imgProgressNumber").css("width",
+							"" + percentComplete + "px");
+					}
+				}
+				//上传视频进度条
+				function uploadVideoProgress(evt) {
+					if(evt.lengthComputable) {
+						//evt.loaded：文件上传的大小 evt.total：文件总的大小   
+						var percentComplete = Math
+							.round((evt.loaded) * 100 / evt.total);
+						videoPercentComplete = percentComplete;
+						//加载进度条，同时显示信息  
+						$("#videoPercent").html(percentComplete + '%')
+						$("#videoProgressNumber").css("width",
+							"" + percentComplete + "px");
+						if(percentComplete == 100) {
+							$("#info-modal").modal('show');
+						}
+					}
+				}
+				//上传按钮点击事件
+				$("#file-submit").click(function() {
+					if(video_input.value != "" && img_input.value != "") {
+						uploadImg(); //上传图片
+						uploadVideo(); //上传视频
+					} else {
+						alert("请选择了图片和视频才上传");
+					}
+
+				});
+				//提交表单=====================================================================
+				$("#upload-submit").click(function() {
+					var user = JSON.parse(sessionStorage.getItem("user"));
+					if(imgPercentComplete == 100 && videoPercentComplete == 100) {
+						if(user != null && imgFileName != null &&
+							$("#title").val() != "") {
+							if(backImgPath != null && backVideoPath != null) {
+								$.ajax({
+									type: 'post',
+									url: 'wVideo_addVideo',
+									data: {
+										title: $("#title").val(),
+										types: $("#types  option:selected").text(),
+										introduce: $("#introduce").val(),
+										author: user.name,
+										obj_id: user.id,
+										backImgPath: backImgPath,
+										backVideoPath: backVideoPath
+									},
+									dataType: 'jsonp',
+									jsonp: "callback",
+									success: function(data) {
+										if(data.jsonStr == "视频添加成功") {
+											alert(data.json);
+											window.location.href = "upload.html";
+
+										}
+
+									},
+									error: function() {
+										alert('网络异常');
+									}
+								});
+
+							} else {
+								alert("上传异常，请刷新页面重新上传！");
+							}
+						} else {
+							//警告框
+							$(".alert-danger").show(300).delay(3000).hide(1000);
+							$('body,html').animate({
+								scrollTop: 0
+							}, 200);
+
+						}
+					} else {
+						alert("上传完毕再提交");
+					}
+
+				});
+			});
+		</script>
+	</body>
+
+</html>
