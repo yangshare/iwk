@@ -8,7 +8,7 @@
     <class name="com.iweike.po.Video" table="wk_video" schema="dbo" catalog="Iwk">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="native"></generator>
+            <generator class="assigned"></generator>
         </id>
         <property name="pic" type="java.lang.String">
             <column name="pic" length="50" />

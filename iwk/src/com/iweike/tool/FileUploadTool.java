@@ -13,6 +13,7 @@ public class FileUploadTool {
 	
 	// 上传图片
 	public String uploadImg(File file, String fileFileName,String content){
+		System.out.println("获取文件路径=="+fileFileName);
 		// 得到工程保存图片的路径
 		@SuppressWarnings("deprecation")
 		String root = ServletActionContext.getRequest().getRealPath("/upload/"+content);
@@ -44,7 +45,7 @@ public class FileUploadTool {
 			}
 			os.close();
 			is.close();
-//			System.out.println("返回文件路径=="+destFile.getPath());
+			System.out.println("返回文件路径=="+destFile.getPath());
 			return destFile.getPath();
 		} catch (Exception e) {
 			System.out.println("文件上传工具类异常：" + e.getMessage());

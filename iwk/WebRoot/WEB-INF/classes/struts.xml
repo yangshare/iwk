@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	<!-- ajax引擎请求action -->
+
+	<!-- 指定Web应用的默认编码集,相当于调用HttpServletRequest的setCharacterEncoding方法 -->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	
 	<!-- common-fileupload上传文件有文件大小限制，默认 限制为2M。2147483648字节=2GB -->
 	<constant name="struts.multipart.maxSize" value="2147483648"></constant>
-	<package name="iweike" extends="json-default">
 	
+	<!-- 设置存放临时文件的文件夹,如果此文件夹不存在，Struts 2会自动创建一个(默认c:\tmp) -->
+	<constant name="struts.multipart.saveDir" value="/tmp"></constant>
+	
+	<package name="iweike" extends="json-default">
+		<!-- ajax引擎请求action -->
 		<!--
 			<action name="wVideo_getAllVideo"
 			class="com.iweike.action.wVideoAction" method="getAllVideo">
@@ -23,6 +30,8 @@
 				-->
 				<param name="callbackParameter">callback</param>
 			</result>
+			<result name="regSuccess">/home.html</result>
+			<result name="regError">/reg.html</result>
 			<result name="error">/error.jsp</result>
 		</action>
 	</package>

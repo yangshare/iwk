@@ -9,9 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class EncodeingFilter implements Filter {
-
+	/**
+	 * 过滤POST方法乱码
+	 */
+	private String characterEncoding;
 	public void destroy() {
 		// TODO Auto-generated method stub
 
@@ -21,12 +25,14 @@ public class EncodeingFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		HttpServletRequest request = (HttpServletRequest)req;
-		request.setCharacterEncoding("UTF-8");
+		HttpServletResponse response = (HttpServletResponse)res;
+		request.setCharacterEncoding(characterEncoding);
+		response.setCharacterEncoding(characterEncoding);
 		chain.doFilter(req, res);
 	}
 
-	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
+	public void init(FilterConfig config) throws ServletException {
+		characterEncoding = config.getInitParameter("encoding");
 
 	}
 

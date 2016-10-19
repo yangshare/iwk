@@ -2,7 +2,9 @@ package com.iweike.action;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +33,7 @@ public class wVideoAction extends ActionSupport {
 	HttpServletResponse response = ServletActionContext.getResponse();
 
 	PrintWriter out = null;
+	Video video = null;
 	// 2.struts配置返回的json串，必须有set方法配套
 	List<String> json = null;
 	String jsonStr = "";
@@ -39,43 +42,70 @@ public class wVideoAction extends ActionSupport {
 		return jsonStr;
 	}
 
-//	public void setJsonStr(String jsonStr) {
-//		this.jsonStr = jsonStr;
-//	}
 
 	public List<String> getJson() {
 		return json;
 	}
 
-//	public void setJson(List<String> json) {
-//		this.json = json;
-//	}
 
 	// 3.文件的上传
-	FileUploadTool fileUploadTool=new FileUploadTool();
+	FileUploadTool fileUploadTool = new FileUploadTool();
 	private File image;
 	private String imageFileName;
 	private File upload;
 	private String uploadFileName;
 
-
 	public void setImage(File image) {
 		this.image = image;
 	}
-
 
 	public void setUpload(File upload) {
 		this.upload = upload;
 	}
 
-
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
 
-
 	public void setUploadFileName(String uploadFileName) {
 		this.uploadFileName = uploadFileName;
+	}
+
+	// 4.文件入库的字段
+	private String title;
+	private String types;
+	private String introduce;
+	private String author;
+	private String obj_id;
+	private String backImgPath;
+	private String backVideoPath;
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setTypes(String types) {
+		this.types = types;
+	}
+
+	public void setIntroduce(String introduce) {
+		this.introduce = introduce;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public void setObj_id(String objId) {
+		obj_id = objId;
+	}
+
+	public void setBackImgPath(String backImgPath) {
+		this.backImgPath = backImgPath;
+	}
+
+	public void setBackVideoPath(String backVideoPath) {
+		this.backVideoPath = backVideoPath;
 	}
 
 	// 实例化Dao包
@@ -147,24 +177,61 @@ public class wVideoAction extends ActionSupport {
 
 	}
 
+	/* *************************************
+	 * 文件上传////////////////////////////***
+	 */
 	// 5.上传文件
 	public String uploadVideo() {
-		String filePath="";
-		if(upload!=null){
-			filePath=fileUploadTool.uploadImg(upload, uploadFileName, "video");
+		String filePath = "";
+		if (upload != null) {
+			filePath = fileUploadTool
+					.uploadImg(upload, uploadFileName, "video");
 		}
-		this.jsonStr = "upload/video/"+filePath.substring(filePath.lastIndexOf("\\")+1);
+		this.jsonStr = "upload/video/"
+				+ filePath.substring(filePath.lastIndexOf("\\") + 1);
 		return SUCCESS;
 	}
 
 	// 6.上传图片
 	public String uploadImg() {
-		String filePath="";
-		if(image!=null){
-			filePath=fileUploadTool.uploadImg(image, imageFileName, "img");
+		String filePath = "";
+		if (image != null) {
+			filePath = fileUploadTool.uploadImg(image, imageFileName, "img");
 		}
-		System.out.println("返回文件路径=="+filePath);
-		this.jsonStr = "upload/img/"+filePath.substring(filePath.lastIndexOf("\\")+1);
+
+		this.jsonStr = "upload/img/"
+				+ filePath.substring(filePath.lastIndexOf("\\") + 1);
 		return SUCCESS;
 	}
+
+	// 7.视频入库
+	public String addVideo() {
+		video = new Video();
+		// 获取时间戳
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dateSr = sdf.format(date);
+
+		video.setId(videoDao.queryLastRecordId() + 1);
+		video.setTitle(title);
+		video.setTypes(types);
+		video.setIntroduce(introduce);
+		video.setAuthor(author);
+
+		video.setPic(backImgPath);// 封面
+		video.setClicks(0);// 点击率
+		video.setTime(dateSr);// 视频上传时间
+
+		video.setSrcs(backVideoPath);
+		video.setObjId(obj_id);
+		video.setIsShow(0 + "");// 是否上架展示
+		try {
+			this.jsonStr =videoDao.save(video)?"视频添加成功":"视频添加失败";
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+
 }

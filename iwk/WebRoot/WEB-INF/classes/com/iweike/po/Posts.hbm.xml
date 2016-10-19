@@ -8,7 +8,7 @@
     <class name="com.iweike.po.Posts" table="wk_posts" schema="dbo" catalog="Iwk">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="native"></generator>
+            <generator class="assigned"></generator>
         </id>
         <property name="time" type="java.sql.Timestamp">
             <column name="time" length="23" />

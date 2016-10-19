@@ -24,7 +24,7 @@ public class Video {
 
 	private String srcs;
 	private String objId;
-	private String isShow;//是否上架展示
+	private String isShow;//是否上架展示0否，1是
 
 
 

@@ -18,23 +18,22 @@ public class Iwk_videoDaoImpl{
 	 * 7.集合内对象类别转换;
 	 */
 	IwkDaoImpl iwkDao=new IwkDaoImpl();//通用增删改查方法
-	Video video=new Video();
+	Video video=null;
 	
 	//1.根据id删除对象
 	public boolean delectById(int id) {
-		
+		video=new Video();
 		return iwkDao.delete(id, video);
 	}
 	
 	//2.根据id查询单个对象
 	public Video queryById(int id) {
-		
+		video=new Video();
 		return (Video)iwkDao.query(id, video);
 	}
 	
 	//3.保存对象
 	public boolean save(Object object) {
-		
 		return iwkDao.save(object);
 	}
 	
@@ -46,7 +45,7 @@ public class Iwk_videoDaoImpl{
 	
 	//5.取等条件查询（对象类，字段，值），返回集合；
 	public List<Video> queryByWhere(String keys,Object values) {
-
+		video=new Video();
 		try {
 			return Object2Other(iwkDao.query(video, keys, values));
 		} catch (Exception e) {
@@ -57,7 +56,7 @@ public class Iwk_videoDaoImpl{
 	
 	//6.获取所有记录，返回集合；	
 	public List<Video> queryAll() {
-		
+		video=new Video();
 		try {
 			
 			return Object2Other(iwkDao.query(video));
@@ -89,7 +88,7 @@ public class Iwk_videoDaoImpl{
 	// 8.降序查询（对象类,数据库字段,取前面几条）
 
 	public List<Video> queryOrderDesc(String keys,int maxResults) {
-
+		video=new Video();
 		try {
 			return Object2Other(iwkDao.queryOrderDesc(video, keys,maxResults));
 		} catch (Exception e) {
@@ -102,13 +101,26 @@ public class Iwk_videoDaoImpl{
 	// 9.升序查询（对象类,数据库字段，取前面几条）
 
 	public List<Video> queryOrderAsc(String keys,int maxResults) {
-
+		video=new Video();
 		try {
 			return Object2Other(iwkDao.queryOrderAsc(video, keys,maxResults));
 		} catch (Exception e) {
 			System.out.println("Iwk_VideoDaoImpl的queryOrderAsc报错："+e.getMessage());
 			return null;
 		}
+
+	}
+	
+	// 10.获取最后一条记录的id（对象类）
+	public int queryLastRecordId() {
+		video=new Video();
+		try {
+			video=(Video)iwkDao.queryLastRecordId(video);
+			return video.getId();
+		} catch (Exception e) {
+			System.out.println("视频queryLastRecordId方法异常：" + e.getMessage());
+			return 0;
+		} 
 
 	}
 	

@@ -18,7 +18,7 @@ $(function() {
 				dataType: 'jsonp',
 				jsonp: "callback",
 				success: function(data) {
-					if (data.json == "用户名存在") {
+					if(data.json == "用户名存在") {
 						alert(data.json);
 						$("#name").val("").focus();
 					}
@@ -32,7 +32,7 @@ $(function() {
 		}
 		//查询用户是否登录
 	queryUserIsLogined = function() {
-		if (sessionStorage.getItem("user") == "" || sessionStorage.getItem("user") == null) {
+		if(sessionStorage.getItem("user") == "" || sessionStorage.getItem("user") == null) {
 
 		} else {
 			var user = JSON.parse(sessionStorage.getItem("user"));
@@ -51,35 +51,39 @@ $(function() {
 				dataType: 'jsonp',
 				jsonp: "callback",
 				success: function(data) {
+					console.log(JSON.parse(data.jsonStr));
+					var userObject = JSON.parse(data.jsonStr);
+					if(userObject != null && userObject != "") {
+						//把用户信息放到localStorage
+						var reginfo = {
+							id: userObject.id, //编号
+							icons: userObject.icons, //头像
+							name: userObject.name, //登陆名（昵称）
+							pwd: userObject.pwd, //登陆密码
+							question: userObject.question, //找回密码问题
+							answer: userObject.answer, //找回密码答案
+							school: userObject.school, //学校
+							college: userObject.college, //学院
+							professional: userObject.professional, //专业
+							clazz: userObject.clazz, //班级
+							sno: userObject.sno, //学号
+							sname: userObject.sname, //学生姓名
+							ssex: userObject.ssex, //学生性别
+							email: userObject.email, //邮箱
+							introduce: userObject.introduce //自我介绍
+						};
+						sessionStorage.setItem("user", JSON.stringify(reginfo));
+					} else {
 
-					//把用户信息放到localStorage
-					var reginfo = {
-						id: data.json[0].id, //编号
-						icons: data.json[0].icons, //头像
-						name: data.json[0].name, //登陆名（昵称）
-						pwd: data.json[0].pwd, //登陆密码
-						question: data.json[0].question, //找回密码问题
-						answer: data.json[0].answer, //找回密码答案
-						school: data.json[0].school, //学校
-						colleage: data.json[0].colleage, //学院
-						professional: data.json[0].professional, //专业
-						clazz: data.json[0].clazz, //班级
-						sno: data.json[0].sno, //学号
-						sname: data.json[0].sname, //学生姓名
-						ssex: data.json[0].ssex, //学生性别
-						email: data.json[0].email, //邮箱
-						introduce: data.json[0].introduce //自我介绍
-					};
-					sessionStorage.setItem("user", JSON.stringify(reginfo));
+					}
 				},
 				error: function() {
 					alert('网络异常');
 				}
 			});
 		}
-		//通过用户名查询用户
+		//通过用户名查询用户并且更新登陆状态
 	queryUserByName = function(name, pwd) {
-		console.log(name + "," + pwd);
 		$.ajax({
 			type: 'post',
 			url: 'http://localhost:8080/iwk/wUser_queryUserByName',
@@ -94,12 +98,13 @@ $(function() {
 				$("#loading").show();
 			},
 			success: function(data) {
-
-				if (data.json == null)
+				console.log(JSON.parse(data.jsonStr));
+				var userObject = JSON.parse(data.jsonStr);
+				if(userObject == null || userObject == "")
 					alert("用户名或者密码有误！");
 				else {
 					//登录成功保存用户信息
-					console.log(JSON.stringify(data));
+
 					//关闭登录显示用户名
 					$("#loading").hide();
 					$("#login-modal").hide(1000);
@@ -107,21 +112,21 @@ $(function() {
 
 					//把用户信息放到localStorage
 					var reginfo = {
-						id: data.json[0].id, //编号
-						icons: data.json[0].icons, //头像
-						name: data.json[0].name, //登陆名（昵称）
-						pwd: data.json[0].pwd, //登陆密码
-						question: data.json[0].question, //找回密码问题
-						answer: data.json[0].answer, //找回密码答案
-						school: data.json[0].school, //学校
-						colleage: data.json[0].colleage, //学院
-						professional: data.json[0].professional, //专业
-						clazz: data.json[0].clazz, //班级
-						sno: data.json[0].sno, //学号
-						sname: data.json[0].sname, //学生姓名
-						ssex: data.json[0].ssex, //学生性别
-						email: data.json[0].email, //邮箱
-						introduce: data.json[0].introduce //自我介绍
+						id: userObject.id, //编号
+						icons: userObject.icons, //头像
+						name: userObject.name, //登陆名（昵称）
+						pwd: userObject.pwd, //登陆密码
+						question: userObject.question, //找回密码问题
+						answer: userObject.answer, //找回密码答案
+						school: userObject.school, //学校
+						college: userObject.college, //学院
+						professional: userObject.professional, //专业
+						clazz: userObject.clazz, //班级
+						sno: userObject.sno, //学号
+						sname: userObject.sname, //学生姓名
+						ssex: userObject.ssex, //学生性别
+						email: userObject.email, //邮箱
+						introduce: userObject.introduce //自我介绍
 					};
 					sessionStorage.setItem("user", JSON.stringify(reginfo));
 					//显示用户名在顶部

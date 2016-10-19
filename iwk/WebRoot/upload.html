@@ -357,6 +357,7 @@
 					videofile = this.files[0];
 					if(2097152000 > videofile.size) { //2000兆字节(mb)=2097152000字节(b)
 						videoFileName = videofile.name;
+						$("#title")[0].value=videoFileName;
 					} else {
 						video_input.value = "";
 						alert("文件超过20M，不予上传！");
@@ -533,12 +534,10 @@
 									dataType: 'jsonp',
 									jsonp: "callback",
 									success: function(data) {
+										alert(data.jsonStr);
 										if(data.jsonStr == "视频添加成功") {
-											alert(data.json);
 											window.location.href = "upload.html";
-
 										}
-
 									},
 									error: function() {
 										alert('网络异常');

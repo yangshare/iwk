@@ -9,7 +9,6 @@ public class User {
 
 	// Fields
 
-	private String college;// 大学
 	private String icons;// 头像
 
 	private int id;// 编号
@@ -18,7 +17,7 @@ public class User {
 	private String question;// 找回密码问题
 	private String answer;// 找回密码答案
 	private String school;// 学校
-	private String colleage;// 学院
+	private String college;// 学院
 	private String professional;// 专业
 	private String clazz;// 班级
 	private String sno;// 学号
@@ -150,12 +149,5 @@ public class User {
 		this.icons = icons;
 	}
 
-	public String getColleage() {
-		return this.colleage;
-	}
-
-	public void setColleage(String colleage) {
-		this.colleage = colleage;
-	}
 
 }
