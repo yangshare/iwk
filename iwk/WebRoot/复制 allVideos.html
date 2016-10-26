@@ -265,7 +265,7 @@
 							$("#loadMoreImg").removeAttr("hidden");
 						},
 						success: function(data) {
-							
+							$("#loadMoreImg").attr("hidden", "hidden");
 							if(curPage <= 0) {
 								parentDiv.html(''); //清场
 								$("#loadMoreDiv").removeAttr("hidden");
@@ -292,8 +292,8 @@
 									'</div>';
 								fragment.appendChild(div);
 							}
-//							parentDiv.append(fragment);
-							myMasonry(parentDiv,$(fragment));
+							parentDiv.append(fragment);
+							myMasonry(parentDiv);
 
 						},
 						error: function() {
@@ -302,13 +302,9 @@
 					});
 				}
 				//瀑布流布局
-				function myMasonry(parentDiv,fragment) {
-					//新添加元素图片加载完毕
-					fragment.imagesLoaded(function() {
-						//去掉加載动画
-						$("#loadMoreImg").attr("hidden", "hidden");
-						//瀑布排序
-						parentDiv.append(fragment).masonry({
+				function myMasonry(parentDiv) {
+					parentDiv.imagesLoaded(function() {
+						parentDiv.masonry({
 							columnWidth: '.item',
 							itemSelector: '.item'
 						});
@@ -330,11 +326,62 @@
 						$(".loadMore").before('<hr style="height: 10px;background-color: rebeccapurple;"/>');
 						$(".loadMore").before($(myDiv));
 						getVideos(myUrl + 'wVideo_queryPageVideo', $(myDiv), curPageNum);
+						//						getItemElement(curPageNum);
+						//						curPageNum--;
 					} else {
 						$("#loadMoreA").html("沒有更多");
 					}
 
 				});
+				//初始化瀑布流布局
+				var $grid = $('.grid').html("").masonry({
+					columnWidth: 2,
+					itemSelector: '.item'
+				});
+
+				// 加载更多
+				function getItemElement(curPage) {
+					$.ajax({
+						data: {
+							curPage: curPage
+						},
+						type: 'GET',
+						url: myUrl + 'wVideo_queryPageVideo',
+						dataType: 'jsonp',
+						jsonp: "callback",
+
+						success: function(data) {
+							//循环取出视频对象
+							var video = null;
+							var div = null;
+
+							for(var i = 0; i < data.json.length; i++) {
+								video = data.json[i];
+								div = document.createElement('div');
+								div.className = 'col-sm-4 col-md-3 col-lg-3 item';
+								div.innerHTML = '<div class = "well well-sm" >' +
+									'<a target="_blank" href = "video.html?id=' + video.id + '&src=' + video.srcs + '" >' +
+									'<div class = "thumb-overlay" >' +
+									'<img src = "' + video.pic + '" title = "' + video.title + '" alt = "' + video.title + '" class = "img-responsive "/>' +
+									'<div class = "duration" >' + video.types + '</div></div>' +
+									'<span class = "video-title title-truncate m-t-5" > ' + video.title + '</span>' +
+									'</a>' +
+									'<div class = "video-views pull-left" >' + video.time + '</div>' +
+									'<div class = "video-views pull-right" >' + video.clicks + ' 人观看</div>' +
+									'<div class = "clearfix" ></div>' +
+									'</div>';
+								var $elems = $(div);
+								$grid.append($elems).masonry('appended', $elems);
+
+							}
+
+						},
+						error: function() {
+							console.log('网络异常');
+						}
+					});
+
+				}
 
 			});
 		</script>
