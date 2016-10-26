@@ -9,12 +9,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
 import com.iweike.daoimpl.Iwk_videoDaoImpl;
 import com.iweike.po.Video;
 import com.iweike.tool.FileUploadTool;
+import com.iweike.tool.PropertyUtil;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class wVideoAction extends ActionSupport {
@@ -34,6 +36,14 @@ public class wVideoAction extends ActionSupport {
 
 	PrintWriter out = null;
 	Video video = null;
+	// 初始化参数配置文件
+	private static PropertyUtil propertyUtil = new PropertyUtil(
+			"cons.properties");
+	private static int HOME_PerPageRow;// 分页每次加载数量
+	static {
+		HOME_PerPageRow = Integer.parseInt(propertyUtil
+				.getPropertyValue("HOME_PerPageRow"));
+	}
 	// 2.struts配置返回的json串，必须有set方法配套
 	List<String> json = null;
 	String jsonStr = "";
@@ -42,11 +52,9 @@ public class wVideoAction extends ActionSupport {
 		return jsonStr;
 	}
 
-
 	public List<String> getJson() {
 		return json;
 	}
-
 
 	// 3.文件的上传
 	FileUploadTool fileUploadTool = new FileUploadTool();
@@ -72,6 +80,7 @@ public class wVideoAction extends ActionSupport {
 	}
 
 	// 4.文件入库的字段
+	private String video_Id;
 	private String title;
 	private String types;
 	private String introduce;
@@ -79,6 +88,16 @@ public class wVideoAction extends ActionSupport {
 	private String obj_id;
 	private String backImgPath;
 	private String backVideoPath;
+	// 当前页面
+	private int curPage;
+
+	public void setCurPage(int curPage) {
+		this.curPage = curPage;
+	}
+
+	public void setVideo_Id(String videoId) {
+		video_Id = videoId;
+	}
 
 	public void setTitle(String title) {
 		this.title = title;
@@ -115,12 +134,7 @@ public class wVideoAction extends ActionSupport {
 	@SuppressWarnings("unchecked")
 	public String queryAllVideo() {
 		try {
-			// org.hibernate.Session s = HibernateSessionFactory.getSession();
-			// System.out.println("Session="+s);
 			JSONArray jsonList = JSONArray.fromObject(videoDao.queryAll());
-			// System.out.println("jsonList="+jsonList);
-			// out=response.getWriter();
-			// out.print(jsonList);
 			this.json = jsonList;
 			return SUCCESS;
 		} catch (Exception e) {
@@ -226,7 +240,45 @@ public class wVideoAction extends ActionSupport {
 		video.setObjId(obj_id);
 		video.setIsShow(0 + "");// 是否上架展示
 		try {
-			this.jsonStr =videoDao.save(video)?"视频添加成功":"视频添加失败";
+			this.jsonStr = videoDao.save(video) ? "视频添加成功" : "视频添加失败";
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+
+	// 8.增加视频点击次数
+	public String addClicks() {
+		video = new Video();
+		video = videoDao.queryById(Integer.parseInt(video_Id));
+		video.setClicks(video.getClicks() + 1);// 点击率
+		try {
+			this.jsonStr = videoDao.update(video) ? "添加点击次数成功" : "添加点击次数成功";
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+
+	// 9.获取最新视频信息
+	@SuppressWarnings("unchecked")
+	public String queryPageVideo() {
+		try {
+			JSONArray jsonList = JSONArray.fromObject(videoDao.queryPageVideo(curPage, HOME_PerPageRow));
+			this.json = jsonList;
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+	
+	// 10.获取总页面
+	public String queryPageNum() {
+		try {
+			this.jsonStr =""+(int)Math.ceil(videoDao.queryRecordNum()/HOME_PerPageRow);
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();

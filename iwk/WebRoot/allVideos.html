@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
 
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-		<title>i微课 </title>
-		<meta charset="utf-8">
+		<meta charset="UTF-8">
+		<title>i微课</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,18 +16,63 @@
 		<link rel="Shortcut Icon" type="image/ico" href="images/video_128px_1188198_easyicon.net.ico">
 		<link rel="apple-touch-icon" href="images/video_128px_1188198_easyicon.net.ico">
 
-		<script src="js/jquery/jquery.min.js"></script>
-
 		<link href="css/bootstrap.css" rel="stylesheet">
 		<link href="css/style.css" rel="stylesheet">
 		<link href="css/responsive.css" rel="stylesheet">
 		<link href="css/font-awesome.min.css" rel="stylesheet">
 		<link href="css/colors.css" rel="stylesheet">
-
+		<style type="text/css">
+			.grid {
+				max-width: 1200px;
+			}
+			/* clearfix */
+			
+			.grid:after {
+				content: '';
+				display: block;
+				clear: both;
+			}
+			/* ---- grid-item ---- */
+			
+			.grid-item {
+				/*width: 160px;*/
+				/*height: 120px;*/
+				float: left;
+				background: #D26;
+				border: 2px solid #333;
+				border-color: hsla(0, 0%, 0%, 0.5);
+				border-radius: 5px;
+			}
+			
+			.grid-item--width2 {
+				width: 320px;
+			}
+			
+			.grid-item--width3 {
+				width: 480px;
+			}
+			
+			.grid-item--width4 {
+				width: 640px;
+			}
+			
+			.grid-item--height2 {
+				height: 200px;
+			}
+			
+			.grid-item--height3 {
+				height: 260px;
+			}
+			
+			.grid-item--height4 {
+				height: 360px;
+			}
+		</style>
 	</head>
 
 	<body>
-
+		<!-- END 导航栏================================================== -->
+		<!--登录框-->
 		<div class="modal fade in" id="login-modal">
 			<div class="modal-dialog login-modal">
 				<div class="modal-content">
@@ -128,70 +171,24 @@
 				<!--/.nav-collapse -->
 			</div>
 		</div>
+		<!-- END 导航栏================================================== -->
+
+		<!-- START 主要内容================================================== -->
 		<div id="wrapper" style="padding-bottom: 50px;">
 
 			<div class="container">
-
-				<div class="well ad-body">
-					<div id="a1"></div>
-				</div>
-				<div class="clearfix"></div>
-
-				<!--热播视频****************************************************************************-->
-				<div class="well well-filters">
-					<div class="pull-left">
-						<h4>热播视频</h4>
-					</div>
-					<div class="pull-right">
-						<a class="btn btn-primary" href="#/videos?o=mr">more</a>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-
-				<div class="row" id="myLastVideo">
-
-					<div class="col-sm-4 col-md-3 col-lg-3">
-						<div class="well well-sm">
-							<a href="#/video/16576">
-								<div class="thumb-overlay">
-									<img src="images/17.jpg" title="Android开发技巧" alt="Android开发技巧" class="img-responsive ">
-									<div class="duration">
-
-										03:15
-									</div>
-								</div>
-								<span class="video-title title-truncate m-t-5">Android开发技巧</span>
-							</a>
-							<div class="video-views pull-left">
-
-								11 小时 之前
-							</div>
-							<div class="video-views pull-right">
-								49547 人观看
-							</div>
-
-							<div class="clearfix"></div>
-
-						</div>
-					</div>
-
-				</div>
-
 				<!--最新上传视频****************************************************************************-->
 				<div class="well well-filters">
 					<div class="pull-left">
 						<h4>最新上传视频</h4>
 					</div>
-					<div class="pull-right">
-						<a class="btn btn-primary" href="#/videos?o=mr">more</a>
-					</div>
 					<div class="clearfix"></div>
 				</div>
 
-				<div class="row" id="myPopVideo">
+				<div class="row masonry-container" id="myLastVideo">
 
 					<div class="col-sm-4 col-md-3 col-lg-3">
-						<div class="well well-sm">
+						<!--<div class="well well-sm">
 							<a href="#/video/16576">
 								<div class="thumb-overlay">
 									<img src="images/17.jpg" title="Android开发技巧" alt="Android开发技巧" class="img-responsive ">
@@ -212,12 +209,30 @@
 
 							<div class="clearfix"></div>
 
-						</div>
+						</div>-->
 					</div>
 
 				</div>
+				<!--加载更多div-------------------------------------------------------------------------------->
+				<div class="grid row">
+					<div class="grid-item grid-item--width3"></div>
+					<div class="grid-item grid-item--height3"></div>
+					<div class="grid-item"></div>
+					<div class="grid-item grid-item--height2"></div>
+				</div>
+				<!--加载更多DIV-------------------------------------------------------------------------------->
+				<div class="row">
+					<div style="margin: 5px;" id="loadMoreDiv" hidden="hidden">
+						<div id="loadMoreImg" hidden="hidden" class="well well-sm" style="text-align: center;">
+							<img src="images/loading_big.gif" />
+						</div>
+						<div id="loadMoreA" class="well well-sm" style="text-align: center;">
+							<a href="javascript:void(0);">加载更多</a>
+						</div>
+					</div>
+				</div>
+				<!-- START 底部================================================== -->
 				<div class="footer-container">
-
 					<div class="footer">
 						<div class="container">
 							<div class="hidden-xs">
@@ -241,118 +256,168 @@
 						</div>
 					</div>
 				</div>
+				<!--END 底部-->
 			</div>
 		</div>
-		<!-- Bootstrap core JavaScript
-    ================================================== -->
+		<!-- END 主要内容================================================== -->
+
+		<!-- Bootstrap core JavaScript ================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="js/jquery/jquery.min.js"></script>
 		<script src="js/bootstrap/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery.avs-0.2.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
 		<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" src="ckplayer6.8/ckplayer/ckplayer.js" charset="utf-8"></script>
+		<script src="js/my/variable.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/masonry.pkgd.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/imagesLoaded.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			/*
-			 * js获取url参数值
-			 */
-			function GetRequest() {
-				var url = location.search; //获取url中"?"符后的字串 
-				var theRequest = new Object();
-				if(url.indexOf("?") != -1) {
-					var str = url.substr(1);
-					strs = str.split("&");
-					for(var i = 0; i < strs.length; i++) {
-						theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-					}
-				}
+			$(function() {
+				//获取总页数
+				var maxnum = 0;
+				var curPageNum = 0;
 
-				if(theRequest['id'] !== null) {
-					//发送点击次数
+				function getPageNum(urls) {
 					$.ajax({
-						data: {
-							video_Id: theRequest['id']
-						},
-						type: "POST",
-						url: "wVideo_addClicks",
+						type: 'GET',
+						url: urls,
 						dataType: 'jsonp',
 						jsonp: "callback",
 						success: function(data) {
-							console.log(JSON.stringify(data));
+							maxnum = data.jsonStr;
 						},
 						error: function() {
-							console.log("电影ID==" + theRequest['id']);
 							console.log('网络异常');
 						}
 					});
 				}
+				//获取视频列表
+				function getVideos(urls, parentDiv, curPage) {
+					$.ajax({
+						data: {
+							curPage: curPage
+						},
+						type: 'GET',
+						url: urls,
+						dataType: 'jsonp',
+						jsonp: "callback",
+						beforeSend: function() {
+							$("#loadMoreImg").removeAttr("hidden");
+						},
+						success: function(data) {
+							$("#loadMoreImg").attr("hidden", "hidden");
+							if(curPage <= 0) {
+								parentDiv.html(''); //清场
+								$("#loadMoreDiv").removeAttr("hidden");
+							}
 
-				return theRequest;
-			}
-			var Request = new Object();
-			Request = GetRequest();
-			var videoId, videoSrc;
-			videoId = Request['id'];
-			videoSrc = Request['src'];
-			/*
-			 * ckplayer播放器配置
-			 */
-			var flashvars = {
-				f: 'http://' + window.location.host + '/iwk/' + videoSrc,
-				c: 0,
-				b: 1,
-				i: 'images/videoloading.swf', //'视频开始图片'
-				//以下为自定义的播放器参数用来在插件里引用的
-				my_title: 'i微课', //'视频标题文字'
-				my_url: encodeURIComponent(window.location.href) //本页面地址
-			};
-			var params = {
-				bgcolor: '#FFF',
-				allowFullScreen: true,
-				allowScriptAccess: 'always',
-				wmode: 'transparent'
-			};
-			CKobject.embedSWF('ckplayer6.8/ckplayer/ckplayer.swf', 'a1', 'ckplayer_a1', '100%', '400', flashvars, params);
-			/*
-			CKobject.embedSWF(播放器路径,容器id,播放器id/name,播放器宽,播放器高,flashvars的值,其它定义也可省略);
-			下面三行是调用html5播放器用到的
-			*/
-			var video = ['http://' + window.location.host + '/iwk/' + videoSrc];
-			console.log(video);
-			var support = ['iPad', 'iPhone', 'ios', 'android+false', 'msie10+false'];
-			CKobject.embedHTML5('a1', 'ckplayer_a1', '100%', '400', video, flashvars, support);
+							//循环取出视频对象
+							var video = null;
+							var fragment = document.createDocumentFragment(); //创建文档碎片节点
+							var div = null;
+							for(var i = 0; i < data.json.length; i++) {
+								video = data.json[i];
+								div = document.createElement('div');
+								div.className = 'col-sm-4 col-md-3 col-lg-3 item';
+								div.innerHTML = '<div class = "well well-sm" >' +
+									'<a href = "video.html?id=' + video.id + '&src=' + video.srcs + '" >' +
+									'<div class = "thumb-overlay" >' +
+									'<img src = "' + video.pic + '" title = "' + video.title + '" alt = "' + video.title + '" class = "img-responsive "/>' +
+									'<div class = "duration" >' + video.types + '</div></div>' +
+									'<span class = "video-title title-truncate m-t-5" > ' + video.title + '</span>' +
+									'</a>' +
+									'<div class = "video-views pull-left" >' + video.time + '</div>' +
+									'<div class = "video-views pull-right" >' + video.clicks + ' 人观看</div>' +
+									'<div class = "clearfix" ></div>' +
+									'</div>';
+								fragment.appendChild(div);
+							}
+							parentDiv.append(fragment);
+							myMasonry(parentDiv);
 
-			//切换flash播放器
-			function addflash() {
-				if(CKobject.Flash()['f']) {
-					CKobject._K_('a1').innerHTML = '';
-					CKobject.embedSWF('ckplayer/ckplayer.swf', 'a1', 'ckplayer_a1', '100%', '400', flashvars, params);
-				} else {
-					alert('该环境中没有安装flash插件，无法切换');
+						},
+						error: function() {
+							console.log('网络异常');
+						}
+					});
 				}
-			}
-			//切换HTML5播放器
-			function addhtml5() {
-				if(CKobject.isHTML5()) {
-					support = ['all'];
-					CKobject._K_('a1').innerHTML = '';
-					CKobject.embedHTML5('a1', 'ckplayer_a1', '100%', '400', video, flashvars, support);
-				} else {
-					alert('该环境不支持html5，无法切换');
-				}
-			}
+				//瀑布流布局
+				function myMasonry(parentDiv) {
+					parentDiv.imagesLoaded(function() {
+						parentDiv.masonry({
+							columnWidth: '.item',
+							itemSelector: '.item'
+						});
+					});
 
-			//判断浏览器兼容性
-			if(navigator.userAgent.match(/IEMobile\/10\.0/)) {
-				var msViewportStyle = document.createElement('style');
-				msViewportStyle.appendChild(
-					document.createTextNode(
-						'@-ms-viewport{width:auto!important}'
-					)
-				);
-				document.querySelector('head').appendChild(msViewportStyle);
-			}
+				}
+				//初始获取视频列表
+				getVideos(myUrl + 'wVideo_queryPageVideo', $("#myLastVideo"), 0);
+				//获取总页数
+				getPageNum(myUrl + 'wVideo_queryPageNum');
+
+				//加载更多按钮
+				$("#loadMoreA").click(function() {
+					curPageNum++;
+					if(curPageNum < maxnum) {
+						//						getVideos(myUrl + 'wVideo_queryPageVideo', $("#myLastVideo"), curPageNum);
+						getItemElement(curPageNum);
+						curPageNum--;
+					} else {
+						$("#loadMoreA").html("沒有更多");
+					}
+
+				});
+				//初始化瀑布流布局
+				var $grid = $('.grid').html("").masonry({
+					columnWidth: 2,
+					itemSelector: '.item'
+				});
+
+				// 加载更多
+				function getItemElement(curPage) {
+					$.ajax({
+						data: {
+							curPage: curPage
+						},
+						type: 'GET',
+						url: myUrl + 'wVideo_queryPageVideo',
+						dataType: 'jsonp',
+						jsonp: "callback",
+
+						success: function(data) {
+							//循环取出视频对象
+							var video = null;
+							var div = null;
+							for(var i = 0; i < data.json.length; i++) {
+								video = data.json[i];
+								div = document.createElement('div');
+								div.className = 'col-sm-4 col-md-3 col-lg-3 item';
+								div.innerHTML = '<div class = "well well-sm" >' +
+									'<a href = "video.html?id=' + video.id + '&src=' + video.srcs + '" >' +
+									'<div class = "thumb-overlay" >' +
+									'<img src = "' + video.pic + '" title = "' + video.title + '" alt = "' + video.title + '" class = "img-responsive "/>' +
+									'<div class = "duration" >' + video.types + '</div></div>' +
+									'<span class = "video-title title-truncate m-t-5" > ' + video.title + '</span>' +
+									'</a>' +
+									'<div class = "video-views pull-left" >' + video.time + '</div>' +
+									'<div class = "video-views pull-right" >' + video.clicks + ' 人观看</div>' +
+									'<div class = "clearfix" ></div>' +
+									'</div>';
+								var $elems = $(div);
+								$grid.append($elems).masonry('appended', $elems);
+							}
+
+						},
+						error: function() {
+							console.log('网络异常');
+						}
+					});
+
+				}
+
+			});
 		</script>
-
 	</body>
 
 </html>

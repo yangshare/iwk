@@ -30,8 +30,8 @@
 				-->
 				<param name="callbackParameter">callback</param>
 			</result>
-			<result name="regSuccess">/home.html</result>
-			<result name="regError">/reg.html</result>
+			<result name="regSuccess" type="redirect">/reg/regSuccess.html</result>
+			<result name="regError">/reg/regError.html</result>
 			<result name="error">/error.jsp</result>
 		</action>
 	</package>

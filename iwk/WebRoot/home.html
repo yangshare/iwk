@@ -23,7 +23,6 @@
 		<link href="css/responsive.css" rel="stylesheet">
 		<link href="css/font-awesome.min.css" rel="stylesheet">
 		<link href="css/colors.css" rel="stylesheet">
-
 	</head>
 
 	<body>
@@ -95,7 +94,7 @@
 							<a href="home.html">万象百科</a>
 						</li>
 						<li>
-							<a href="#/albums">课堂同步</a>
+							<a href="allVideos.html">课堂同步</a>
 						</li>
 						<li>
 							<a href="#/categories">社区</a>
@@ -193,7 +192,7 @@
 					<div class="clearfix"></div>
 				</div>
 
-				<div class="row" id="myPopVideo">
+				<div class="row masonry-container" id="myPopVideo">
 
 					<div class="col-sm-4 col-md-3 col-lg-3">
 						<div class="well well-sm">
@@ -233,7 +232,7 @@
 					<div class="clearfix"></div>
 				</div>
 
-				<div class="row" id="myLastVideo">
+				<div class="row masonry-container" id="myLastVideo">
 
 					<div class="col-sm-4 col-md-3 col-lg-3">
 						<div class="well well-sm">
@@ -287,15 +286,19 @@
 					</div>
 				</div>
 			</div>
+		</div>	
 			<!-- Bootstrap core JavaScript
     ================================================== -->
 			<!-- Placed at the end of the document so the pages load faster -->
 			<script src="js/jquery/jquery.min.js"></script>
+
 			<script src="js/bootstrap/bootstrap.min.js"></script>
 			<script type="text/javascript" src="js/jquery/jquery.avs-0.2.js"></script>
 			<script type="text/javascript" src="js/app.js"></script>
 			<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
 			<script src="js/my/variable.js" type="text/javascript" charset="utf-8"></script>
+			<script src="js/masonry.pkgd.min.js" type="text/javascript" charset="utf-8"></script>
+			<script src="js/imagesLoaded.js" type="text/javascript" charset="utf-8"></script>
 			<script>
 				//判断浏览器兼容性
 				if(navigator.userAgent.match(/IEMobile\/10\.0/)) {
@@ -308,6 +311,7 @@
 					document.querySelector('head').appendChild(msViewportStyle);
 				}
 				$(function() {
+
 					//获取视频列表
 					function getVideos(urls, parentDiv) {
 						$.ajax({
@@ -316,7 +320,7 @@
 							dataType: 'jsonp',
 							jsonp: "callback",
 							beforeSend: function() {
-								parentDiv.html('<div class = "col-sm-4 col-md-3 col-lg-3" ><div class = "well well-sm"><img id="loading" src="images/loading_big.gif"/>加载中。。。</div></div>'); //清场
+								parentDiv.html('<div class = "col-sm-4 col-md-3 col-lg-3" ><div class = "well well-sm" style="text-align: center;"><img id="loading" src="images/loading_big.gif"/></div></div>'); //清场
 							},
 							success: function(data) {
 								console.log(JSON.stringify(data));
@@ -325,7 +329,7 @@
 								var video = null;
 								for(var i = 0; i < data.json.length; i++) {
 									video = data.json[i];
-									parentDiv.append('<div class = "col-sm-4 col-md-3 col-lg-3" >' +
+									parentDiv.append('<div class = "col-sm-4 col-md-3 col-lg-3 item" >' +
 										'<div class = "well well-sm" >' +
 										'<a href = "video.html?id=' + video.id + '&src=' + video.srcs + '" >' +
 										'<div class = "thumb-overlay" >' +
@@ -339,6 +343,8 @@
 										'</div></div>');
 
 								}
+								
+								myMasonry();
 
 							},
 							error: function() {
@@ -349,9 +355,31 @@
 					//获取最热视频
 					getVideos(myUrl + 'wVideo_queryPopVideo', $("#myPopVideo"));
 					//获取最新视频
-					getVideos(myUrl + 'wVideo_queryLastVideo',$("#myLastVideo"));
-					
+					getVideos(myUrl + 'wVideo_queryLastVideo', $("#myLastVideo"));
+
 				});
+				//瀑布流布局
+				function myMasonry() {
+					var $container = $('.masonry-container');
+					$container.imagesLoaded(function() {
+						$container.masonry({
+							columnWidth: '.item',
+							itemSelector: '.item'
+						});
+					});
+				}
+//				window.onload = function() {
+//					setTimeout(function() {
+//						//瀑布布局
+//						var $container = $('.masonry-container');
+//						$container.imagesLoaded(function() {
+//							$container.masonry({
+//								columnWidth: '.item',
+//								itemSelector: '.item'
+//							});
+//						});
+//					}, 1000);
+//				}
 			</script>
 
 	</body>

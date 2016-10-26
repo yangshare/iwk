@@ -129,10 +129,6 @@ public class wUserAction extends ActionSupport {
 		this.introduce = introduce;
 	}
 
-	public void setIcons(String icons) {
-		this.icons = icons;
-	}
-
 
 	// 实例化Dao包
 	Iwk_videoDaoImpl videoDao = new Iwk_videoDaoImpl();
@@ -142,6 +138,7 @@ public class wUserAction extends ActionSupport {
 	public String addUser() {
 		user = new User();
 		try {
+			icons=uploadImg();
 			user.setIcons(icons);// 头像
 
 			user.setId(userDao.queryLastRecordId() + 1);// 编号
@@ -168,9 +165,6 @@ public class wUserAction extends ActionSupport {
 				out.print("alert('注册失败！请联系寻求帮助')");
 				return "regError";
 			}
-				
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
@@ -258,12 +252,12 @@ public class wUserAction extends ActionSupport {
 	public String uploadImg() {
 		String filePath = "";
 		if (image != null) {
-			filePath = fileUploadTool.uploadImg(image, imageFileName, "img");
+			filePath = fileUploadTool.uploadImg(image, imageFileName, "img/head");
 		}
 
-		this.jsonStr = "upload/img/"
+		filePath = "upload/img/head/"
 				+ filePath.substring(filePath.lastIndexOf("\\") + 1);
-		return SUCCESS;
+		return filePath;
 	}
 
 }

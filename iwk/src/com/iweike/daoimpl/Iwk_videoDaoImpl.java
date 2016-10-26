@@ -124,5 +124,29 @@ public class Iwk_videoDaoImpl{
 
 	}
 	
+	// 11.分页查询
+	public List<Video> queryPageVideo(int curPage,int max) {
+		video=new Video();
+		try {
+			return Object2Other(iwkDao.query(video, curPage, max));
+		} catch (Exception e) {
+			System.out.println("Iwk_VideoDaoImpl的queryOrderAsc报错："+e.getMessage());
+			return null;
+		}
+
+	}
+	
+	// 11.获取该表记录总条数
+
+	public double queryRecordNum() {
+		video=new Video();
+		try {
+			return iwkDao.queryRecordNum(video);
+		} catch (Exception e) {
+			System.out.println("Iwk_VideoDaoImpl的queryRecordNum报错："+e.getMessage());
+			return Double.parseDouble(""+0);
+		}
+	}
+	
 
 }

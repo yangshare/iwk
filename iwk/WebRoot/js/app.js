@@ -18,8 +18,8 @@ $(function() {
 				dataType: 'jsonp',
 				jsonp: "callback",
 				success: function(data) {
-					if(data.json == "用户名存在") {
-						alert(data.json);
+					if(data.jsonStr == "用户名存在") {
+						alert(data.jsonStr);
 						$("#name").val("").focus();
 					}
 

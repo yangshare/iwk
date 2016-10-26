@@ -11,7 +11,6 @@ import org.hibernate.criterion.Restrictions;
 
 import com.iweike.dao.IwkDao;
 import com.iweike.hibernate.HibernateSessionFactory;
-import com.iweike.po.Video;
 
 public class IwkDaoImpl implements IwkDao {
 	/**
@@ -60,17 +59,18 @@ public class IwkDaoImpl implements IwkDao {
 		}
 
 	}
-	
+
 	// 通过name查询
 
 	public int query(String name, Object object) {
-		String rows=null;
+		String rows = null;
 		try {
 			s = HibernateSessionFactory.getSession();
 			Criteria c = s.createCriteria(object.getClass());
 			c.add(Restrictions.eq("name", name));
-//			Projections.rowCount() 来取得总记录数
-		    rows=c.setProjection(Projections.rowCount()).uniqueResult().toString();
+			// Projections.rowCount() 来取得总记录数
+			rows = c.setProjection(Projections.rowCount()).uniqueResult()
+					.toString();
 			return Integer.parseInt(rows);
 		} catch (Exception e) {
 			System.out.println("query方法异常：" + e.getMessage());
@@ -84,7 +84,6 @@ public class IwkDaoImpl implements IwkDao {
 	// 3.保存
 
 	public boolean save(Object object) {
-		System.out.println(((Video)object).getId());
 		try {
 			s = HibernateSessionFactory.getSession();
 			t = s.beginTransaction();
@@ -108,7 +107,7 @@ public class IwkDaoImpl implements IwkDao {
 		try {
 			s = HibernateSessionFactory.getSession();
 			t = s.beginTransaction();
-			s.save(object);
+			s.update(object);
 			t.commit();
 
 			return true;
@@ -221,6 +220,48 @@ public class IwkDaoImpl implements IwkDao {
 		} catch (Exception e) {
 			System.out.println("queryLastRecordId方法异常：" + e.getMessage());
 			return null;
+		} finally {
+			s.close();
+		}
+
+	}
+
+	// 10.分页查询记录，返回集合；
+	@SuppressWarnings("unchecked")
+	public List<Object> query(Object object, int curPage, int max) {
+
+		try {
+
+			s = HibernateSessionFactory.getSession();
+
+			Criteria c = s.createCriteria(object.getClass());
+			c.setFirstResult(curPage * max);
+			c.setMaxResults(max);
+
+			return c.list();
+		} catch (Exception e) {
+			System.out.println("query方法异常：" + e.getMessage());
+			return null;
+		} finally {
+			s.close();
+		}
+
+	}
+
+	// 11.获取该表记录总条数
+
+	public double queryRecordNum(Object object) {
+		String rows = null;
+		try {
+			s = HibernateSessionFactory.getSession();
+			Criteria c = s.createCriteria(object.getClass());
+			// Projections.rowCount() 来取得总记录数
+			rows = c.setProjection(Projections.rowCount()).uniqueResult()
+					.toString();
+			return Double.parseDouble(rows);
+		} catch (Exception e) {
+			System.out.println("query方法异常：" + e.getMessage());
+			return 0;
 		} finally {
 			s.close();
 		}
