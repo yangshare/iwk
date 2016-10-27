@@ -227,17 +227,17 @@ public class wVideoAction extends ActionSupport {
 		String dateSr = sdf.format(date);
 
 		video.setId(videoDao.queryLastRecordId() + 1);
-		video.setTitle(title);
-		video.setTypes(types);
-		video.setIntroduce(introduce);
-		video.setAuthor(author);
+		video.setTitle(title.trim());
+		video.setTypes(types.trim());
+		video.setIntroduce(introduce.trim());
+		video.setAuthor(author.trim());
 
-		video.setPic(backImgPath);// 封面
+		video.setPic(backImgPath.trim());// 封面
 		video.setClicks(0);// 点击率
 		video.setTime(dateSr);// 视频上传时间
 
-		video.setSrcs(backVideoPath);
-		video.setObjId(obj_id);
+		video.setSrcs(backVideoPath.trim());
+		video.setObjId(obj_id.trim());
 		video.setIsShow(0 + "");// 是否上架展示
 		try {
 			this.jsonStr = videoDao.save(video) ? "视频添加成功" : "视频添加失败";
@@ -266,7 +266,7 @@ public class wVideoAction extends ActionSupport {
 	@SuppressWarnings("unchecked")
 	public String queryPageVideo() {
 		try {
-			JSONArray jsonList = JSONArray.fromObject(videoDao.queryPageVideo(curPage, HOME_PerPageRow));
+			JSONArray jsonList = JSONArray.fromObject(videoDao.queryPageVideo(curPage, HOME_PerPageRow,"types",types));
 			this.json = jsonList;
 			return SUCCESS;
 		} catch (Exception e) {
@@ -278,7 +278,18 @@ public class wVideoAction extends ActionSupport {
 	// 10.获取总页面
 	public String queryPageNum() {
 		try {
-			this.jsonStr =""+(int)Math.ceil(videoDao.queryRecordNum()/HOME_PerPageRow);
+			this.jsonStr =""+(int)Math.ceil(videoDao.queryRecordNum("types",types)/HOME_PerPageRow);
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+	
+	// 10.获取各类视频个数
+	public String queryPageNumByTypes() {
+		try {
+			this.jsonStr =""+(int)videoDao.queryPageNumByTypes("types",types);
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();

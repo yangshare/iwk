@@ -18,7 +18,7 @@ public class Test {
 		//		
 		video = new Video();
 		// 获取时间戳
-		System.out.println(Math.ceil(videoDao.queryRecordNum()/8));
+		System.out.println((int)videoDao.queryRecordNum("types","计算机"));
 
 	}
 

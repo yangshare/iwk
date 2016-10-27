@@ -125,10 +125,10 @@ public class Iwk_videoDaoImpl{
 	}
 	
 	// 11.分页查询
-	public List<Video> queryPageVideo(int curPage,int max) {
+	public List<Video> queryPageVideo(int curPage,int max,String types,String values) {
 		video=new Video();
 		try {
-			return Object2Other(iwkDao.query(video, curPage, max));
+			return Object2Other(iwkDao.query(video, curPage, max,types,values));
 		} catch (Exception e) {
 			System.out.println("Iwk_VideoDaoImpl的queryOrderAsc报错："+e.getMessage());
 			return null;
@@ -138,15 +138,25 @@ public class Iwk_videoDaoImpl{
 	
 	// 11.获取该表记录总条数
 
-	public double queryRecordNum() {
+	public double queryRecordNum(String types,String values) {
 		video=new Video();
 		try {
-			return iwkDao.queryRecordNum(video);
+			return iwkDao.queryRecordNum(video,types,values);
 		} catch (Exception e) {
 			System.out.println("Iwk_VideoDaoImpl的queryRecordNum报错："+e.getMessage());
 			return Double.parseDouble(""+0);
 		}
 	}
-	
+
+	// 12.获取各类视频个数
+	public double queryPageNumByTypes(String types, String values) {
+		video=new Video();
+		try {
+			return iwkDao.queryRecordNum(video,types,values);
+		} catch (Exception e) {
+			System.out.println("Iwk_VideoDaoImpl的queryRecordNum报错："+e.getMessage());
+			return Double.parseDouble(""+0);
+		}
+	}
 
 }

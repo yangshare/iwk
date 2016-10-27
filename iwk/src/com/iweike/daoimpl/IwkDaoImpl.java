@@ -228,13 +228,24 @@ public class IwkDaoImpl implements IwkDao {
 
 	// 10.分页查询记录，返回集合；
 	@SuppressWarnings("unchecked")
-	public List<Object> query(Object object, int curPage, int max) {
+	/*
+	 * query
+	 * Object object数据表
+	 * int curPage,当前页数
+	 *  int max,每页条数
+	 *  String keys,字段
+	 *  String values,字段值
+	 * 
+	 */
+	public List<Object> query(Object object, int curPage, int max,String keys,String values) {
 
 		try {
 
 			s = HibernateSessionFactory.getSession();
 
 			Criteria c = s.createCriteria(object.getClass());
+			if (!values.equals("全部"))
+				c.add(Restrictions.eq(keys, values));
 			c.setFirstResult(curPage * max);
 			c.setMaxResults(max);
 
@@ -248,13 +259,15 @@ public class IwkDaoImpl implements IwkDao {
 
 	}
 
-	// 11.获取该表记录总条数
 
-	public double queryRecordNum(Object object) {
+	// 11.获取该表某类型记录总条数{object表，keys字段，values字段对应值}
+	public double queryRecordNum(Object object, String keys, Object values) {
 		String rows = null;
 		try {
 			s = HibernateSessionFactory.getSession();
 			Criteria c = s.createCriteria(object.getClass());
+			if (!values.equals("全部"))
+				c.add(Restrictions.eq(keys, values));
 			// Projections.rowCount() 来取得总记录数
 			rows = c.setProjection(Projections.rowCount()).uniqueResult()
 					.toString();
@@ -267,5 +280,7 @@ public class IwkDaoImpl implements IwkDao {
 		}
 
 	}
+	
+	
 
 }
