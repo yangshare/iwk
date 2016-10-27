@@ -181,6 +181,7 @@
 				<!--加载更多div-------------------------------------------------------------------------------->
 				<div class="grid row"></div>
 				<!--加载更多DIV-------------------------------------------------------------------------------->
+
 				<div class="row loadMore">
 					<div style="margin: 5px;" id="loadMoreDiv" hidden="hidden">
 						<div id="loadMoreImg" hidden="hidden" class="well well-sm" style="text-align: center;">
@@ -265,7 +266,7 @@
 							$("#loadMoreImg").removeAttr("hidden");
 						},
 						success: function(data) {
-							
+
 							if(curPage <= 0) {
 								parentDiv.html(''); //清场
 								$("#loadMoreDiv").removeAttr("hidden");
@@ -292,8 +293,8 @@
 									'</div>';
 								fragment.appendChild(div);
 							}
-//							parentDiv.append(fragment);
-							myMasonry(parentDiv,$(fragment));
+							//							parentDiv.append(fragment);
+							myMasonry(parentDiv, $(fragment));
 
 						},
 						error: function() {
@@ -302,7 +303,7 @@
 					});
 				}
 				//瀑布流布局
-				function myMasonry(parentDiv,fragment) {
+				function myMasonry(parentDiv, fragment) {
 					//新添加元素图片加载完毕
 					fragment.imagesLoaded(function() {
 						//去掉加載动画
@@ -327,7 +328,7 @@
 					if(curPageNum < maxnum) {
 						myDiv = document.createElement('div');
 						myDiv.className = 'row';
-						$(".loadMore").before('<hr style="height: 10px;background-color: rebeccapurple;"/>');
+						$(".loadMore").before('<div class="page-header"><h1><small>第<font>' + (curPageNum + 1) + '</font>页</small></h1></div><hr style="height:10px;background-color:rebeccapurple;margin-top:-40px">');
 						$(".loadMore").before($(myDiv));
 						getVideos(myUrl + 'wVideo_queryPageVideo', $(myDiv), curPageNum);
 					} else {
