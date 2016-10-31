@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>i微课</title>
+		<link href="images/video_128px_1188198_easyicon.net.ico" type="image/x-icon" rel="shortcut icon" />
+		<link rel="apple-touch-icon" href="images/video_128px_1188198_easyicon.net.ico">
+
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../css/colors.css" />
+		<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	</head>
+
+	<body style="padding-top: 0;">
+		<!--  警告框================================================== -->
+		<div class="alert alert-danger alert-dismissible" role="alert" style="display: none; text-align: center;">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Warning!</strong> 别瞎搞，登录没，信息填完没.
+		</div>
+		<!--  信息框================================================== -->
+		<div class="alert alert-info alert-dismissible" role="alert" style="display: none; text-align: center;">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Info!</strong> 正在上传.
+		</div>
+		<!--  成功框================================================== -->
+		<div class="alert alert-success alert-dismissible" role="alert" style="display: none; text-align: center;">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Well done!</strong> 上传成功.
+		</div>
+		<!-- 主要内容**************************************************** -->
+		<div id="wrapper" style="padding-bottom: 50px;">
+
+			<div class="container">
+				<h1 align="center">
+					编写帖子
+				</h1>
+				<div id="form-upload">
+
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="well-sm">
+								<div class="form-group">
+									<label for="user_icon">
+										<span class="glyphicon  glyphicon-envelope"></span>&nbsp;封面
+									</label>
+									<input type="file" id="img_input" name="image" accept="image/*">
+									<div style="background: #848484; width: 100px; height: 10px; margin-top: 5px">
+										<div id="imgProgressNumber" style="background: #428bca; width: 0px; height: 10px"></div>
+									</div>
+									<font id="imgPercent">0%</font>
+									<p class="help-block">
+										请选择本地图片作为视频封面.
+									</p>
+									<img id="showUploadImg" src="" width="100px" />
+								</div>
+								<hr />
+
+								<button id="file-submit" class="btn btn-default btn-block">
+									上传
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="nickname">
+							标题*
+						</label>
+						<input type="text" class="form-control validation-empty" name="title" id="title" placeholder="title">
+					</div>
+
+					<div class="form-group">
+						<label for="question">
+							类型*
+						</label>
+						<select id="types" name="types" class="form-control">
+							<option>
+								计算机
+							</option>
+							<option>
+								美术
+							</option>
+							<option>
+								环境建设
+							</option>
+							<option>
+								其他
+							</option>
+						</select>
+
+					</div>
+
+					<div class="form-group">
+						<label for="introduce">
+							内容(请使用makedown语法编辑内容)
+						</label>
+						<textarea style="height: 400px;resize: auto;" onkeyup="compile()" class="form-control validation-empty" name="txtContent" id="txtContent" placeholder="本编辑器使用makedown语法"></textarea>
+					</div>
+					<div id="txtResult" class="well"></div>
+
+					<button id="upload-submit" class="btn btn-default">
+						提交
+					</button>
+				</div>
+				<br />
+				<br />
+				<br />
+				<!-- 底部**************************************************** -->
+				<div class="footer-container">
+
+					<div class="footer">
+						<div class="container">
+							<div class="hidden-xs">
+								<div class="pull-left">
+									<span>版权所有 © 2016</span> yangshare
+								</div>
+								<div class="pull-right">
+									Powered by
+									<a target="_blank" href="http://www.yangshare.com">yangshare</a>
+									<a href="#/static/faq" rel="nofollow">帮助</a> /
+									<a href="#/feedback" rel="nofollow">意见</a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="visible-xs">
+								<span>版权所有 © 2016</span>
+								<a target="_blank" href="http://www.yangshare.com">yangshare</a>
+								<br> Powered by
+								<a target="_blank" href="http://www.yangshare.com">yangshare</a>
+								<br>
+								<a href="#/static/faq" rel="nofollow">帮助</a> /
+								<a href="#/feedback" rel="nofollow">意见</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 提示后台处理模态框 -->
+		<div id="info-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" id="mySmallModalLabel">视频格式转换中，稍等片刻</h4>
+					</div>
+					<div class="modal-body">
+						<img src="../images/loading_big.gif" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--END 提示后台处理模态框 -->
+		<script src="../js/jquery/jquery.min.js"></script>
+		<script src="../js/bootstrap/bootstrap.min.js"></script>
+		<script src="../js/makedown/showdown.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/my/variable.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/validations.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			$(function() {
+				//非空验证====================================================================
+				$(".validation-empty").blur(function() {
+					//非空验证，参数说明:当前组件，关闭按钮，提交按钮
+					if(validationEmpty(this, $("#remenberMe"),
+							$("#upload-submit"))) {
+						console.log("true");
+						//用户名存在验证
+						if($(this).attr("id") == "name") {
+							queryUserIsExisted($(this).val());
+						}
+
+					} else {
+						console.log("false");
+					}
+				});
+
+				//让jQuery方法可以被标签访问
+				window.compile = compile;
+
+				//介绍编辑器语法
+				var makedownTxt = "makedown语法：\n# 一级标题\n## 二级标题\n### 三级标题\ - 无序列表1\n 1. 有序列表1\n \n **这个是粗体**\n *这个是斜体*\n ***这个是粗体加斜体***\n \n >这个是引用\n \n ```\n\n        这里写代码片\n```\n ---\n ****\n ___\n![这里写图片描述](http://avatar.csdn.net/3/2/3/1_yangshare.jpg)\n\n[这里写链接内容](http://www.baidu.com)";
+				$("#txtContent").html(makedownTxt);
+				compile();
+				//makedown编辑函数
+				function compile() {
+					var txtContent = document.getElementById("txtContent").value;
+					var converter = new showdown.Converter();
+					var html = converter.makeHtml(txtContent);
+					document.getElementById("txtResult").innerHTML = html;
+				}
+
+				//上传文件=====================================================================
+				var imgPercentComplete = 0; //图片上传进度
+				var videoPercentComplete = 0; //视频上传进度
+				var imgFileName = null; //图片文件名
+				var picHight = null; //图片高度
+				var imgfile = null;
+				var img_input = document.getElementById("img_input");
+				//存放服务端传回的图片和视频路径
+				var backImgPath = "";
+				//文件域选择文件时, 执行readFile函数 
+				img_input.addEventListener('change', readImgFile, false);
+				//读取图片
+				function readImgFile() {
+					imgfile = this.files[0];
+					if(2097152 > imgfile.size) { //2兆字节(mb)=2097152字节(b)
+						imgFileName = imgfile.name;
+					} else {
+						img_input.value = "";
+						alert("图片超过2M，不予上传！");
+					}
+				}
+				//上传封面
+				function uploadImg() {
+					var xhr = new XMLHttpRequest();
+
+					var fd = new FormData();
+
+					fd.append("image", imgfile);
+
+					//监听事件 
+					xhr.onreadystatechange = function() {
+						if(xhr.readyState == 4 && xhr.status == 200) {
+							console.log(xhr.responseText);
+							backImgPath = JSON.parse(xhr.responseText).jsonStr;
+							$("#showUploadImg")[0].setAttribute("src", "../" + backImgPath);
+							var img = new Image(); //构造JS的Image对象
+							img.src = "../" + backImgPath; //将本地图片赋给image对象
+							// 加载完成执行
+							img.onload = function() {
+								// 打印
+								picHight = img.height;
+								console.log("上传图片高度：" + picHight);
+
+							};
+							
+							$("#file-submit").attr("disabled",true);
+
+						} else {
+							if(xhr.status == 500) {
+								alert("图片上传失败请重新上传！");
+							}
+
+						}
+					}
+					xhr.upload.addEventListener("progress", uploadImgProgress, false);
+					//传输开始
+					xhr.addEventListener("loadstart", uploadImgStart(), false);
+					//传输成功完成
+					xhr.addEventListener("load", uploadImgComplete(), false);
+					//发送文件和表单自定义参数 
+					xhr.open("POST", "wPosts_uploadImg", true);
+
+					xhr.send(fd);
+				}
+				//上传图片开始
+				function uploadImgStart(evt) {
+					//信息框
+					$(".alert-info strong").html("图片");
+					$(".alert-info").show(300);
+					$('body,html').animate({
+						scrollTop: 0
+					}, 200);
+				}
+				//上传图片完成
+				function uploadImgComplete(evt) {
+					$(".alert-info").hide();
+					//成功框
+					$(".alert-success strong").html("图片");
+					$(".alert-success").show(300).delay(3000).hide(1000);
+					$('body,html').animate({
+						scrollTop: 0
+					}, 200);
+					//上传图片进度条
+					imgPercentComplete = 100;
+				}
+				//上传图片进度条
+				function uploadImgProgress(evt) {
+					if(evt.lengthComputable) {
+						//evt.loaded：文件上传的大小 evt.total：文件总的大小   
+						var percentComplete = Math
+							.round((evt.loaded) * 100 / evt.total);
+						imgPercentComplete = percentComplete;
+						//加载进度条，同时显示信息  
+						$("#imgPercent").html(percentComplete + '%')
+						$("#imgProgressNumber").css("width",
+							"" + percentComplete + "px");
+					}
+				}
+				//上传按钮点击事件
+				$("#file-submit").click(function() {
+					if(img_input.value != "") {
+						uploadImg(); //上传图片
+					} else {
+						alert("请选择了图片和视频才上传");
+					}
+
+				});
+				//提交表单=====================================================================
+				$("#upload-submit").click(function() {
+					var user = JSON.parse(sessionStorage.getItem("user"));
+					if(imgPercentComplete == 100) {
+						if(user != null && imgFileName != null &&
+							$("#title").val() != "") {
+							if(backImgPath != null) {
+								$.ajax({
+									type: 'post',
+									url: 'wPosts_addPosts',
+									data: {
+										title: $("#title").val(),
+										types: $("#types  option:selected").text(),
+										contents: $("#txtResult").html(),
+										author: user.name,
+										obj_id: user.id,
+										pic: backImgPath,
+										picHight: picHight
+									},
+									dataType: 'jsonp',
+									jsonp: "callback",
+									success: function(data) {
+										alert(data.jsonStr);
+										if(data.jsonStr == "帖子添加成功") {
+											window.location.href = "writeBlog.html";
+										}
+									},
+									error: function() {
+										alert('网络异常');
+									}
+								});
+
+							} else {
+								alert("上传异常，请刷新页面重新上传！");
+							}
+						} else {
+							//警告框
+							$(".alert-danger").show(300).delay(3000).hide(1000);
+							$('body,html').animate({
+								scrollTop: 0
+							}, 200);
+
+						}
+					} else {
+						alert("上传完毕再提交");
+					}
+
+				});
+			});
+		</script>
+	</body>
+
+</html>

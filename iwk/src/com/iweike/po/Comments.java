@@ -14,24 +14,46 @@ public class Comments {
 
     // Fields    
 
-	private int id;// 编号
+	private Integer id;// 编号
+	private String types;//是視頻還是帖子
 	private String time;// 评论时间
 	private String contents;// 评论内容
 	private String author;// 评论人
 
 	private Integer objId;
 	private Integer videoId;// 视频编号
+	
+	private String isShow;//审核通过
 
 
     // Property accessors
+	
+	
 
     public Integer getId() {
         return this.id;
     }
     
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public String getTypes() {
+		return types;
+	}
+
+	public void setTypes(String types) {
+		this.types = types;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(String isShow) {
+		this.isShow = isShow;
+	}
+
 
     public Integer getObjId() {
         return this.objId;

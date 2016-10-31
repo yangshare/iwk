@@ -18,8 +18,6 @@
 		<link rel="Shortcut Icon" type="image/ico" href="images/video_128px_1188198_easyicon.net.ico">
 		<link rel="apple-touch-icon" href="images/video_128px_1188198_easyicon.net.ico">
 
-		
-
 		<link href="css/bootstrap.css" rel="stylesheet">
 		<link href="css/style.css" rel="stylesheet">
 		<link href="css/responsive.css" rel="stylesheet">
@@ -29,7 +27,7 @@
 	</head>
 
 	<body>
-<!-- END 导航栏================================================== -->	
+		<!-- END 导航栏================================================== -->
 		<!--登录框-->
 		<div class="modal fade in" id="login-modal">
 			<div class="modal-dialog login-modal">
@@ -65,11 +63,17 @@
 				<ul class="top-menu">
 					<div class="pull-left">
 
-						<li><a data-toggle="modal" href="#" style="color:#2a9fd6;">手机应用</a></li>
+						<li>
+							<a data-toggle="modal" href="#" style="color:#2a9fd6;">手机应用</a>
+						</li>
 					</div>
 					<div class="pull-right">
-						<li><a href="#/signup" rel="nofollow">注册</a></li>
-						<li><a data-toggle="modal" href="#/#login-modal">登录</a></li>
+						<li>
+							<a href="#/signup" rel="nofollow">注册</a>
+						</li>
+						<li>
+							<a data-toggle="modal" href="#/#login-modal">登录</a>
+						</li>
 					</div>
 					<div class="clearfix"></div>
 				</ul>
@@ -89,10 +93,18 @@
 				</div>
 				<div class="navbar-collapse navbar-inverse-collapse collapse" style="height: 1px;">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#/videos">视频</a></li>
-						<li><a href="#/albums">图片</a></li>
-						<li><a href="#/categories">类别</a></li>
-						<li><a href="#/community">社区</a></li>
+						<li>
+							<a href="#/videos">视频</a>
+						</li>
+						<li>
+							<a href="#/albums">图片</a>
+						</li>
+						<li>
+							<a href="#/categories">类别</a>
+						</li>
+						<li>
+							<a href="#/community">社区</a>
+						</li>
 						<li class="dropdown">
 							<a href="#/#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i></a>
 							<ul class="dropdown-menu search-dropdown-menu">
@@ -116,16 +128,51 @@
 				<!--/.nav-collapse -->
 			</div>
 		</div>
-<!-- END 导航栏================================================== -->		
+		<!-- END 导航栏================================================== -->
+		<!-- START 主要内容================================================== -->
+		<div id="wrapper" style="padding-bottom: 50px;">
+
+			<div class="container my_container">
+
+				
+				<!-- START 底部================================================== -->
+				<div class="footer-container">
+					<div class="footer">
+						<div class="container">
+							<div class="hidden-xs">
+								<div class="pull-left">
+									<span>版权所有 © 2016</span> yangshare
+								</div>
+								<div class="pull-right">
+									Powered by
+									<a target="_blank" href="http://www.yangshare.com">yangshare</a>
+									<a href="#/static/faq" rel="nofollow">帮助</a> /
+									<a href="#/feedback" rel="nofollow">意见</a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="visible-xs"><span>版权所有 © 2016</span>
+								<a target="_blank" href="http://www.yangshare.com">yangshare</a><br>Powered by
+								<a target="_blank" href="http://www.yangshare.com">yangshare</a><br>
+								<a href="#/static/faq" rel="nofollow">帮助</a> /
+								<a href="#/feedback" rel="nofollow">意见</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--END 底部-->
+			</div>
+		</div>
+		<!-- END 主要内容================================================== -->
 		<!-- Bootstrap core JavaScript
     ================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="js/jquery/jquery.min.js"></script>
 		<script src="js/bootstrap/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/jquery/jquery.avs-0.2.js"></script>
+		<!--<script type="text/javascript" src="js/jquery/jquery.avs-0.2.js"></script>-->
 
 		<script>
-			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+			if(navigator.userAgent.match(/IEMobile\/10\.0/)) {
 				var msViewportStyle = document.createElement('style')
 				msViewportStyle.appendChild(
 					document.createTextNode(

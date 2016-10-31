@@ -320,7 +320,7 @@
 									'<span class = "video-title title-truncate m-t-5" > ' + video.title + '</span>' +
 									'</a>' +
 									'<div class = "video-views pull-left" >' + video.time + '</div>' +
-									'<div class = "video-views pull-right" >' + video.clicks + ' 人观看</div>' +
+									'<div class = "video-views pull-right" >作者：' + video.author + '</div>' +
 									'<div class = "clearfix" ></div>' +
 									'</div>';
 								fragment.appendChild(div);
@@ -349,9 +349,9 @@
 
 				}
 				//初始获取视频列表（url,展示的容器，页数，视频类型）
-				getVideos(myUrl + 'wVideo_queryPageVideo', $("#myVideos"), 0, "全部");
+				getVideos(myUrl + 'wPosts_queryPagePosts', $("#myVideos"), 0, "全部");
 				//获取总页数（url,types）
-				getPageNum(myUrl + 'wVideo_queryPageNum', "全部");
+				getPageNum(myUrl + 'wPosts_queryPageNum', "全部");
 
 				//加载更多按钮
 				var myDiv = null;
@@ -363,7 +363,7 @@
 						myDiv.className = 'row';
 						$(".myGrid").append('<div class="page-header"><h1><small>第<font>' + (curPageNum + 1) + '</font>页</small></h1></div><hr style="height:10px;background-color:rebeccapurple;margin-top:-40px">');
 						$(".myGrid").append($(myDiv));
-						getVideos(myUrl + 'wVideo_queryPageVideo', $(myDiv), curPageNum, types);
+						getVideos(myUrl + 'wPosts_queryPagePosts', $(myDiv), curPageNum, types);
 					} else {
 						$("#loadMoreA").html("沒有更多");
 					}
@@ -383,13 +383,13 @@
 					/*
 					 * 获取该类视频记录条数
 					 */
-					queryPageNumByTypes(myUrl + 'wVideo_queryPageNumByTypes', types, $(this).find("span")[0]);
+					queryPageNumByTypes(myUrl + 'wPosts_queryPageNumByTypes', types, $(this).find("span")[0]);
 
 					//初始获取视频列表（url,展示的容器，页数，视频类型）
 					$(".myGrid").html("");
-					getVideos(myUrl + 'wVideo_queryPageVideo', $("#myVideos"), curPageNum, types);
+					getVideos(myUrl + 'wPosts_queryPagePosts', $("#myVideos"), curPageNum, types);
 					//获取总页数（url,types）
-					getPageNum(myUrl + 'wVideo_queryPageNum', types);
+					getPageNum(myUrl + 'wPosts_queryPageNum', types);
 					//视频顶部标题
 					$("#my-page-header")[0].innerHTML=types;
 				});

@@ -109,7 +109,7 @@
 							<a href="allVideos.html">课堂同步</a>
 						</li>
 						<li>
-							<a href="#/categories">社区</a>
+							<a href="allPosts.html">社区</a>
 						</li>
 						<li>
 							<a href="#/community">关于</a>
@@ -232,12 +232,6 @@
 							<option>
 								环境建设
 							</option>
-							<option>
-								4
-							</option>
-							<option>
-								5
-							</option>
 						</select>
 
 					</div>
@@ -357,7 +351,7 @@
 					videofile = this.files[0];
 					if(2097152000 > videofile.size) { //2000兆字节(mb)=2097152000字节(b)
 						videoFileName = videofile.name;
-						$("#title")[0].value=videoFileName;
+						$("#title")[0].value = videoFileName;
 					} else {
 						video_input.value = "";
 						alert("文件超过20M，不予上传！");
@@ -378,7 +372,7 @@
 							console.log(xhr.responseText);
 							backVideoPath = JSON.parse(xhr.responseText).jsonStr;
 							$("#info-modal").modal('hide');
-
+							$("#file-submit").attr("disabled", true);
 						} else {
 							if(xhr.status == 500) {
 								alert("视频上传失败请重新上传！");
@@ -465,7 +459,7 @@
 					$(".alert-info").hide();
 					//成功框
 					$(".alert-success strong").html("视频");
-//					$(".alert-success").show(300).delay(3000).hide(1000);
+					//					$(".alert-success").show(300).delay(3000).hide(1000);
 					$('body,html').animate({
 						scrollTop: 0
 					}, 200);

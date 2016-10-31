@@ -21,18 +21,8 @@
 		<link href="css/responsive.css" rel="stylesheet">
 		<link href="css/font-awesome.min.css" rel="stylesheet">
 		<link href="css/colors.css" rel="stylesheet">
-		<style type="text/css">
-			.grid {
-				max-width: 1200px;
-			}
-			/* clearfix */
-			
-			.grid:after {
-				content: '';
-				display: block;
-				clear: both;
-			}
-		</style>
+
+		
 	</head>
 
 	<body>
@@ -108,7 +98,7 @@
 							<a href="allVideos.html">课堂同步</a>
 						</li>
 						<li>
-							<a href="#/categories">社区</a>
+							<a href="allPosts.html">社区</a>
 						</li>
 						<li>
 							<a href="#/community">关于</a>
@@ -143,44 +133,25 @@
 
 			<div class="container my_container">
 				<!--最新上传视频****************************************************************************-->
-				<div class="well well-filters">
-					<div class="pull-left">
-						<h4>最新上传视频</h4>
-					</div>
-					<div class="clearfix"></div>
+				<div class="page-header">
+					<h1><small id="my-page-header">全部</small></h1>
 				</div>
+				<hr style="height:10px;background-color:rebeccapurple;margin-top:-40px">
 
-				<div class="row masonry-container" id="myLastVideo">
+				<div class="row" id="myCommunity">
 
 					<div class="col-sm-4 col-md-3 col-lg-3">
-						<!--<div class="well well-sm">
-							<a href="#/video/16576">
-								<div class="thumb-overlay">
-									<img src="images/17.jpg" title="Android开发技巧" alt="Android开发技巧" class="img-responsive ">
-									<div class="duration">
 
-										03:15
-									</div>
-								</div>
-								<span class="video-title title-truncate m-t-5">Android开发技巧</span>
-							</a>
-							<div class="video-views pull-left">
-
-								11 小时 之前
-							</div>
-							<div class="video-views pull-right">
-								49547 人观看
-							</div>
-
-							<div class="clearfix"></div>
-
-						</div>-->
+					
+					
+					
 					</div>
 
 				</div>
 				<!--加载更多div-------------------------------------------------------------------------------->
-				<div class="grid row"></div>
+				<div class="myGrid"></div>
 				<!--加载更多DIV-------------------------------------------------------------------------------->
+
 				<div class="row loadMore">
 					<div style="margin: 5px;" id="loadMoreDiv" hidden="hidden">
 						<div id="loadMoreImg" hidden="hidden" class="well well-sm" style="text-align: center;">
@@ -188,6 +159,9 @@
 						</div>
 						<div id="loadMoreA" class="well well-sm" style="text-align: center;">
 							<a href="javascript:void(0);">加载更多</a>
+						</div>
+						<div class="well well-sm" style="text-align: center;">
+							<a href="#">返回顶部</a>
 						</div>
 					</div>
 				</div>
@@ -223,22 +197,51 @@
 
 		<!-- Bootstrap core JavaScript ================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="js/jquery/jquery.min.js"></script>
+		<script src="js/jquery/jquery-1.11.1.min.js"></script>
 		<script src="js/bootstrap/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery.avs-0.2.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
 		<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/my/variable.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/masonry.pkgd.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/imagesLoaded.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/masonry.pkgd.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function() {
-				//获取总页数
-				var maxnum = 0;
-				var curPageNum = 0;
 
-				function getPageNum(urls) {
+				var maxnum = 0; //获取总页数
+				var curPageNum = 0;
+				var types = "全部"; //视频类型
+				/*
+				 * 获取该类视频页数
+				 */
+				function queryPageNumByTypes(urls, types, Badgeobject) {
+					var recordNum = 0;
 					$.ajax({
+						data: {
+							types: types
+						},
+						type: 'GET',
+						url: urls,
+						dataType: 'jsonp',
+						jsonp: "callback",
+						success: function(data) {
+							recordNum = data.jsonStr;
+							Badgeobject.innerText = recordNum;
+						},
+						error: function() {
+							console.log('网络异常');
+						}
+					});
+
+				}
+				/*
+				 * 获取该类视频页数
+				 */
+				function getPageNum(urls, types) {
+					$.ajax({
+						data: {
+							types: types
+						},
 						type: 'GET',
 						url: urls,
 						dataType: 'jsonp',
@@ -251,11 +254,14 @@
 						}
 					});
 				}
-				//获取视频列表
-				function getVideos(urls, parentDiv, curPage) {
+				/*
+				 * 获取视频列表
+				 */
+				function getVideos(urls, parentDiv, curPage, types) {
 					$.ajax({
 						data: {
-							curPage: curPage
+							curPage: curPage,
+							types: types
 						},
 						type: 'GET',
 						url: urls,
@@ -265,7 +271,7 @@
 							$("#loadMoreImg").removeAttr("hidden");
 						},
 						success: function(data) {
-							$("#loadMoreImg").attr("hidden", "hidden");
+
 							if(curPage <= 0) {
 								parentDiv.html(''); //清场
 								$("#loadMoreDiv").removeAttr("hidden");
@@ -292,8 +298,8 @@
 									'</div>';
 								fragment.appendChild(div);
 							}
-							parentDiv.append(fragment);
-							myMasonry(parentDiv);
+							parentDiv.masonry().masonry("destroy");
+							myMasonry(parentDiv, $(fragment));
 
 						},
 						error: function() {
@@ -302,86 +308,40 @@
 					});
 				}
 				//瀑布流布局
-				function myMasonry(parentDiv) {
-					parentDiv.imagesLoaded(function() {
-						parentDiv.masonry({
+				function myMasonry(parentDiv, fragment) {
+					//新添加元素图片加载完毕
+					fragment.imagesLoaded(function() {
+						//去掉加載动画
+						$("#loadMoreImg").attr("hidden", "hidden");
+						//瀑布排序
+						parentDiv.append(fragment).masonry({
 							columnWidth: '.item',
 							itemSelector: '.item'
 						});
 					});
 
 				}
-				//初始获取视频列表
-				getVideos(myUrl + 'wVideo_queryPageVideo', $("#myLastVideo"), 0);
-				//获取总页数
-				getPageNum(myUrl + 'wVideo_queryPageNum');
+				//初始获取视频列表（url,展示的容器，页数，视频类型）
+				getVideos(myUrl + 'wVideo_queryPageVideo', $("#myVideos"), 0, "全部");
+				//获取总页数（url,types）
+				getPageNum(myUrl + 'wVideo_queryPageNum', "全部");
 
 				//加载更多按钮
 				var myDiv = null;
 				$("#loadMoreA").click(function() {
 					curPageNum++;
 					if(curPageNum < maxnum) {
+
 						myDiv = document.createElement('div');
 						myDiv.className = 'row';
-						$(".loadMore").before('<hr style="height: 10px;background-color: rebeccapurple;"/>');
-						$(".loadMore").before($(myDiv));
-						getVideos(myUrl + 'wVideo_queryPageVideo', $(myDiv), curPageNum);
-						//						getItemElement(curPageNum);
-						//						curPageNum--;
+						$(".myGrid").append('<div class="page-header"><h1><small>第<font>' + (curPageNum + 1) + '</font>页</small></h1></div><hr style="height:10px;background-color:rebeccapurple;margin-top:-40px">');
+						$(".myGrid").append($(myDiv));
+						getVideos(myUrl + 'wVideo_queryPageVideo', $(myDiv), curPageNum, types);
 					} else {
 						$("#loadMoreA").html("沒有更多");
 					}
 
 				});
-				//初始化瀑布流布局
-				var $grid = $('.grid').html("").masonry({
-					columnWidth: 2,
-					itemSelector: '.item'
-				});
-
-				// 加载更多
-				function getItemElement(curPage) {
-					$.ajax({
-						data: {
-							curPage: curPage
-						},
-						type: 'GET',
-						url: myUrl + 'wVideo_queryPageVideo',
-						dataType: 'jsonp',
-						jsonp: "callback",
-
-						success: function(data) {
-							//循环取出视频对象
-							var video = null;
-							var div = null;
-
-							for(var i = 0; i < data.json.length; i++) {
-								video = data.json[i];
-								div = document.createElement('div');
-								div.className = 'col-sm-4 col-md-3 col-lg-3 item';
-								div.innerHTML = '<div class = "well well-sm" >' +
-									'<a target="_blank" href = "video.html?id=' + video.id + '&src=' + video.srcs + '" >' +
-									'<div class = "thumb-overlay" >' +
-									'<img src = "' + video.pic + '" title = "' + video.title + '" alt = "' + video.title + '" class = "img-responsive "/>' +
-									'<div class = "duration" >' + video.types + '</div></div>' +
-									'<span class = "video-title title-truncate m-t-5" > ' + video.title + '</span>' +
-									'</a>' +
-									'<div class = "video-views pull-left" >' + video.time + '</div>' +
-									'<div class = "video-views pull-right" >' + video.clicks + ' 人观看</div>' +
-									'<div class = "clearfix" ></div>' +
-									'</div>';
-								var $elems = $(div);
-								$grid.append($elems).masonry('appended', $elems);
-
-							}
-
-						},
-						error: function() {
-							console.log('网络异常');
-						}
-					});
-
-				}
 
 			});
 		</script>
