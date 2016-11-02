@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<title>i微课 </title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+		<meta name="robots" content="index, follow">
+		<meta name="revisit-after" content="1 days">
+		<meta name="layoutmode" content="standard">
+		<meta name="keywords" content=" iwk,tube, movies,  videos">
+		<meta name="description" content="iwk short videos">
+
+		<link rel="Shortcut Icon" type="image/ico" href="../images/video_128px_1188198_easyicon.net.ico">
+		<link rel="apple-touch-icon" href="../images/video_128px_1188198_easyicon.net.ico">
+
+		<script src="../js/jquery/jquery.min.js"></script>
+
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/style.css" rel="stylesheet">
+		<link href="../css/responsive.css" rel="stylesheet">
+		<link href="../css/font-awesome.min.css" rel="stylesheet">
+		<link href="../css/colors.css" rel="stylesheet">
+		<style type="text/css">
+			.media {
+				border-top: 1px dotted #E2E2E2;
+				padding: 15px 0 15px 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="modal fade in" id="login-modal">
+			<div class="modal-dialog login-modal">
+				<div class="modal-content">
+					<div name="login_form">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title">会员登录</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="login_username" class="control-label">用户名:</label>
+								<input name="username" type="text" value="" id="login_username" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="login_password" class="control-label">密码:</label>
+								<input name="password" type="password" value="" id="login_password" class="form-control">
+							</div>
+							<a href="../#/lost" id="lost_password">忘记用户名或密码？</a><br>
+							<a href="../#/confirm" id="confirmation_email">没有收到确认邮件？</a>
+						</div>
+						<div class="modal-footer">
+							<button name="submit_login" id="login_submit" class="btn btn-primary">登录</button>
+							<a href="../reg.html" class="btn btn-secondary">注册</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="top-nav">
+			<div class="container">
+				<ul class="top-menu">
+					<div class="pull-left">
+
+						<li>
+							<a data-toggle="modal" href="../#" style="color:#2a9fd6;">手机应用</a>
+						</li>
+					</div>
+					<div id="showName" class="pull-right">
+						<li>
+							<a href="../reg.html" rel="nofollow">注册</a>
+						</li>
+						<li>
+							<a data-toggle="modal" href="../#/#login-modal">登录</a>
+						</li>
+					</div>
+					<div class="clearfix"></div>
+				</ul>
+			</div>
+		</div>
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="../home.html"><img src="../images/LOGO.png"></a>
+				</div>
+				<div class="navbar-collapse navbar-inverse-collapse collapse" style="height: 1px;">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="../home.html">万象百科</a>
+						</li>
+						<li>
+							<a href="../allVideos.html">课堂同步</a>
+						</li>
+						<li>
+							<a href="../allPosts.html">社区</a>
+						</li>
+						<li>
+							<a href="../#/community">关于</a>
+						</li>
+						<li class="dropdown">
+							<a href="../#/#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i></a>
+							<ul class="dropdown-menu search-dropdown-menu">
+								<form class="form-inline" name="search" id="search_form" method="get" action="#/search">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="搜索" name="search_query" id="search_query" value="">
+
+										<span class="input-group-btn">
+											<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+										</span>
+									</div>
+								</form>
+							</ul>
+						</li>
+						<li>
+							<button type="button" class="btn btn-primary navbar-btn m-l-15 m-r-15" onclick="goUpload()">上传</button>
+						</li>
+					</ul>
+
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+		<div id="wrapper" style="padding-bottom: 50px;">
+
+			<div class="container">
+				<!--正文****************************************************************************-->
+				<div class="page-header" style="white-space: nowrap;">
+					<h1>
+						<small id="my-page-header">正文</small>
+						<button id="goComment" class="btn" style="background-color: white;float: right;">评论</button>
+					</h1>
+
+				</div>
+				<div class="well">
+					<div id="postContent"></div>
+				</div>
+				<div class="clearfix"></div>
+				<!--评论****************************************************************************-->
+				<div class="page-header">
+					<h1><small>评论</small></h1>
+				</div>
+				<div class="well">
+
+					<div class="media">
+						<a class="media-left" href="#">
+							<img src="../ckplayer6.8/images/video_128px_1188198_easyicon.net.ico" data-holder-rendered="true" style="width: 64px; height: 64px;">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Top aligned media,Top aligned media</h4>
+							<div>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</div>
+							<div class="well-sm" style="float: right;">2016-10-31 16:19:10</div>
+						</div>
+					</div>
+					<div class="media">
+						<a class="media-left" href="#">
+							<img src="../ckplayer6.8/images/video_128px_1188198_easyicon.net.ico" data-holder-rendered="true" style="width: 64px; height: 64px;">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Top aligned media,Top aligned media</h4>
+							<div>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</div>
+							<div class="well-sm" style="float: right;">2016-10-31 16:19:10</div>
+						</div>
+					</div>
+					<div class="media">
+						<a class="media-left" href="#">
+							<img src="../ckplayer6.8/images/video_128px_1188198_easyicon.net.ico" data-holder-rendered="true" style="width: 64px; height: 64px;">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Top aligned media,Top aligned media</h4>
+							<div>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</div>
+							<div class="well-sm" style="float: right;">2016-10-31 16:19:10</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row" id="submitComment">
+					<div class="col-lg-12">
+						<div class="input-group">
+							<span class="input-group-btn">
+							    <button class="btn btn-default" type="button">提交评论</button>
+							</span>
+							<input id="commentContent" type="text" class="form-control" placeholder="写吧，我知道你想说点什么！">
+						</div>
+						<!-- /input-group -->
+					</div>
+				</div>
+				<!-- /.row -->
+				<br />
+				<br />
+				<div class="well well-sm" style="text-align: center;">
+					<a href="#">返回顶部</a>
+				</div>
+			</div>
+			<!--底部-------------------------------------------------------------------------->
+			<div class="footer-container">
+				<div class="footer">
+					<div class="container">
+						<div class="hidden-xs">
+							<div class="pull-left">
+								<span>版权所有 © 2016</span> yangshare
+							</div>
+							<div class="pull-right">
+								Powered by
+								<a target="_blank" href="../http://www.yangshare.com">yangshare</a>
+								<a href="../#/static/faq" rel="nofollow">帮助</a> /
+								<a href="../#/feedback" rel="nofollow">意见</a>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="visible-xs"><span>版权所有 © 2016</span>
+							<a target="_blank" href="../http://www.yangshare.com">yangshare</a><br>Powered by
+							<a target="_blank" href="../http://www.yangshare.com">yangshare</a><br>
+							<a href="../#/static/faq" rel="nofollow">帮助</a> /
+							<a href="../#/feedback" rel="nofollow">意见</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../js/bootstrap/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/jquery/jquery.avs-0.2.js"></script>
+		<script type="text/javascript" src="../js/app.js"></script>
+		<script src="../js/login.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/my/variable.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			/*
+			 * 参数值////////////////////////////////////////////////////////////////////
+			 */
+			var Request = new Object();
+			var postId; //帖子id
+
+			/*
+			 * 方法調用////////////////////////////////////////////////////////////////////
+			 */
+			//获取url的id值
+			Request = GetRequest();
+			postId = Request['id'];
+
+			//通过id查post
+			queryPostById(myUrl + "wPosts_queryPostById", postId);
+			//跳到评论
+			$("#goComment").click(function() {
+				window.location.href = "#submitComment";
+			});
+			//跳转到发帖
+			$("#submitComment").click(function() {
+				//判断是否登陆
+				var user = JSON.parse(sessionStorage.getItem("user"));
+				var commentContent = $("#commentContent").val();
+				if(user != null) {
+					if(commentContent.trim() != "")
+						window.open("posts/writeBlog.html");
+					else
+						alert("请写点啥");
+
+				} else {
+					alert("请登陆");
+				}
+			});
+
+			/*
+			 * 方法///////////////////////////////////////////////////////////////////////
+			 */
+
+			//通过id获取post
+			function queryPostById(urls, id) {
+				$.ajax({
+					data: {
+						post_id: id
+					},
+					type: 'GET',
+					url: urls,
+					dataType: 'jsonp',
+					jsonp: "callback",
+					beforeSend: function() {
+						//							$("#loadMoreImg").removeAttr("hidden");
+					},
+					success: function(data) {
+						console.log(JSON.parse(data.jsonStr).contents);
+						$("#postContent").html(JSON.parse(data.jsonStr).contents);
+						$("#my-page-header").html(JSON.parse(data.jsonStr).title);
+					},
+					error: function() {
+						console.log('网络异常');
+					}
+				});
+			}
+
+			//js获取url参数值
+			function GetRequest() {
+				var url = location.search; //获取url中"?"符后的字串 
+				var theRequest = new Object();
+				if(url.indexOf("?") != -1) {
+					var str = url.substr(1);
+					strs = str.split("&");
+					for(var i = 0; i < strs.length; i++) {
+						theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+					}
+				}
+				return theRequest;
+			}
+
+			//提交评论
+			function submitComment(urls, id) {
+				$.ajax({
+					data: {
+						post_id: id
+					},
+					type: 'GET',
+					url: urls,
+					dataType: 'jsonp',
+					jsonp: "callback",
+					beforeSend: function() {
+						//							$("#loadMoreImg").removeAttr("hidden");
+					},
+					success: function(data) {
+						console.log(JSON.parse(data.jsonStr).contents);
+						$("#postContent").html(JSON.parse(data.jsonStr).contents);
+						$("#my-page-header").html(JSON.parse(data.jsonStr).title);
+					},
+					error: function() {
+						console.log('网络异常');
+					}
+				});
+			}
+
+			//判断浏览器兼容性
+			if(navigator.userAgent.match(/IEMobile\/10\.0/)) {
+				var msViewportStyle = document.createElement('style');
+				msViewportStyle.appendChild(
+					document.createTextNode(
+						'@-ms-viewport{width:auto!important}'
+					)
+				);
+				document.querySelector('head').appendChild(msViewportStyle);
+			}
+		</script>
+
+	</body>
+
+</html>

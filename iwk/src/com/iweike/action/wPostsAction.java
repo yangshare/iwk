@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -71,6 +72,8 @@ public class wPostsAction extends ActionSupport {
 	}
 
 	// 4.文件入库的字段
+	private String post_id;
+	
 	private String title;
 	private String types;
 	private String contents;
@@ -88,7 +91,9 @@ public class wPostsAction extends ActionSupport {
 	}
 
 	
-
+	public void setPost_id(String postId) {
+		post_id = postId;
+	}
 
 	public void setTitle(String title) {
 		this.title = title;
@@ -255,7 +260,20 @@ public class wPostsAction extends ActionSupport {
 	// 10.获取各类视频个数
 	public String queryPageNumByTypes() {
 		try {
+			
 			this.jsonStr =""+(int)PostsDao.queryPageNumByTypes("types",types);
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+	
+	// 10.获取各类视频个数
+	public String queryPostById() {
+		try {
+			JSONObject jsonObject=JSONObject.fromObject(PostsDao.queryById(Integer.parseInt(post_id.trim())));
+			this.jsonStr =""+jsonObject;
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();

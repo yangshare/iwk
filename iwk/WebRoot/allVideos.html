@@ -22,7 +22,6 @@
 		<link href="css/font-awesome.min.css" rel="stylesheet">
 		<link href="css/colors.css" rel="stylesheet">
 
-		
 	</head>
 
 	<body>
@@ -180,11 +179,11 @@
 				<!--加载更多DIV-------------------------------------------------------------------------------->
 
 				<div class="row loadMore">
-					<div style="margin: 5px;" id="loadMoreDiv" hidden="hidden">
-						<div id="loadMoreImg" hidden="hidden" class="well well-sm" style="text-align: center;">
+					<div style="margin: 5px;" id="loadMoreDiv">
+						<div id="loadMoreImg" class="well well-sm" style="text-align: center;">
 							<img src="images/loading_big.gif" />
 						</div>
-						<div id="loadMoreA" class="well well-sm" style="text-align: center;">
+						<div id="loadMoreA" hidden="hidden" class="well well-sm" style="text-align: center;">
 							<a href="javascript:void(0);">加载更多</a>
 						</div>
 						<div class="well well-sm" style="text-align: center;">
@@ -225,7 +224,7 @@
 		<!-- Bootstrap core JavaScript ================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="js/jquery/jquery-3.1.1.min.js"></script>
-		<!--<script src="js/bootstrap/bootstrap.min.js"></script>-->
+		<script src="js/bootstrap/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery.avs-0.2.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
 		<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
@@ -298,12 +297,10 @@
 							$("#loadMoreImg").removeAttr("hidden");
 						},
 						success: function(data) {
-
 							if(curPage <= 0) {
 								parentDiv.html(''); //清场
-								$("#loadMoreDiv").removeAttr("hidden");
-							}
 
+							}
 							//循环取出视频对象
 							var video = null;
 							var fragment = document.createDocumentFragment(); //创建文档碎片节点
@@ -340,6 +337,8 @@
 					fragment.imagesLoaded(function() {
 						//去掉加載动画
 						$("#loadMoreImg").attr("hidden", "hidden");
+						//加載更多
+						$("#loadMoreA").removeAttr("hidden");
 						//瀑布排序
 						parentDiv.append(fragment).masonry({
 							columnWidth: '.item',
@@ -391,7 +390,7 @@
 					//获取总页数（url,types）
 					getPageNum(myUrl + 'wVideo_queryPageNum', types);
 					//视频顶部标题
-					$("#my-page-header")[0].innerHTML=types;
+					$("#my-page-header")[0].innerHTML = types;
 				});
 			});
 		</script>

@@ -22,7 +22,6 @@
 		<link href="css/font-awesome.min.css" rel="stylesheet">
 		<link href="css/colors.css" rel="stylesheet">
 
-		
 	</head>
 
 	<body>
@@ -140,7 +139,9 @@
 					<button type="button" class="btn btn-danger"><font>美术</font><span class="badge">0</span></button>
 					<button type="button" class="btn btn-info"><font>计算机</font><span class="badge">0</span></button>
 				</div>
-
+				<br />
+				<br />
+				<button id="writeBlog" class="btn" style="background-color: white;">发帖</button>
 				<!--最新上传视频****************************************************************************-->
 				<div class="page-header">
 					<h1><small id="my-page-header">全部</small></h1>
@@ -150,28 +151,7 @@
 				<div class="row" id="myVideos">
 
 					<div class="col-sm-4 col-md-3 col-lg-3">
-						<!--<div class="well well-sm">
-							<a href="#/video/16576">
-								<div class="thumb-overlay">
-									<img src="images/17.jpg" title="Android开发技巧" alt="Android开发技巧" class="img-responsive ">
-									<div class="duration">
 
-										03:15
-									</div>
-								</div>
-								<span class="video-title title-truncate m-t-5">Android开发技巧</span>
-							</a>
-							<div class="video-views pull-left">
-
-								11 小时 之前
-							</div>
-							<div class="video-views pull-right">
-								49547 人观看
-							</div>
-
-							<div class="clearfix"></div>
-
-						</div>-->
 					</div>
 
 				</div>
@@ -180,11 +160,11 @@
 				<!--加载更多DIV-------------------------------------------------------------------------------->
 
 				<div class="row loadMore">
-					<div style="margin: 5px;" id="loadMoreDiv" hidden="hidden">
-						<div id="loadMoreImg" hidden="hidden" class="well well-sm" style="text-align: center;">
+					<div style="margin: 5px;" id="loadMoreDiv">
+						<div id="loadMoreImg" class="well well-sm" style="text-align: center;">
 							<img src="images/loading_big.gif" />
 						</div>
-						<div id="loadMoreA" class="well well-sm" style="text-align: center;">
+						<div id="loadMoreA" hidden="hidden" class="well well-sm" style="text-align: center;">
 							<a href="javascript:void(0);">加载更多</a>
 						</div>
 						<div class="well well-sm" style="text-align: center;">
@@ -224,8 +204,8 @@
 
 		<!-- Bootstrap core JavaScript ================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="js/jquery/jquery-3.1.1.min.js"></script>
-		<!--<script src="js/bootstrap/bootstrap.min.js"></script>-->
+		<script src="js/jquery/jquery-1.11.1.min.js"></script>
+		<script src="js/bootstrap/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery.avs-0.2.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
 		<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
@@ -298,33 +278,43 @@
 							$("#loadMoreImg").removeAttr("hidden");
 						},
 						success: function(data) {
-
+							var arrayList = new Array();
 							if(curPage <= 0) {
 								parentDiv.html(''); //清场
-								$("#loadMoreDiv").removeAttr("hidden");
+
+							} else {
+								var postListTemp = null;
+								postListTemp = JSON.parse(sessionStorage.getItem("postsList"));
+								for(var i = 0; i < postListTemp.length; i++) {
+									arrayList.push(postListTemp[i]);
+								}
 							}
 
 							//循环取出视频对象
-							var video = null;
+							var post = null;
 							var fragment = document.createDocumentFragment(); //创建文档碎片节点
 							var div = null;
 							for(var i = 0; i < data.json.length; i++) {
-								video = data.json[i];
+								post = data.json[i];
+								arrayList.push(post);
 								div = document.createElement('div');
 								div.className = 'col-sm-4 col-md-3 col-lg-3 item';
 								div.innerHTML = '<div class = "well well-sm" >' +
-									'<a target="_blank" href = "allVideos/video.html?id=' + video.id + '&src=' + video.srcs + '" >' +
+									'<a target="_blank" href = "posts/post.html?id=' + post.id + '">' +
 									'<div class = "thumb-overlay" >' +
-									'<img src = "' + video.pic + '" title = "' + video.title + '" alt = "' + video.title + '" class = "img-responsive "/>' +
-									'<div class = "duration" >' + video.types + '</div></div>' +
-									'<span class = "video-title title-truncate m-t-5" > ' + video.title + '</span>' +
+									'<img src = "' + post.pic + '" title = "' + post.title + '" alt = "' + post.title + '" class = "img-responsive "/>' +
+									'<div class = "duration" >' + post.types + '</div></div>' +
+									'<span class = "video-title title-truncate m-t-5" > ' + post.title + '</span>' +
 									'</a>' +
-									'<div class = "video-views pull-left" >' + video.time + '</div>' +
-									'<div class = "video-views pull-right" >作者：' + video.author + '</div>' +
+									'<div class = "video-views pull-left" >' + post.time + '</div>' +
+									'<div class = "video-views pull-right" >作者：' + post.author + '</div>' +
 									'<div class = "clearfix" ></div>' +
 									'</div>';
 								fragment.appendChild(div);
 							}
+							sessionStorage.setItem("postsList", JSON.stringify(arrayList));
+							//							console.log(sessionStorage.getItem("postsList"));
+
 							parentDiv.masonry().masonry("destroy");
 							myMasonry(parentDiv, $(fragment));
 
@@ -340,6 +330,8 @@
 					fragment.imagesLoaded(function() {
 						//去掉加載动画
 						$("#loadMoreImg").attr("hidden", "hidden");
+						//加載更多
+						$("#loadMoreA").removeAttr("hidden");
 						//瀑布排序
 						parentDiv.append(fragment).masonry({
 							columnWidth: '.item',
@@ -391,8 +383,19 @@
 					//获取总页数（url,types）
 					getPageNum(myUrl + 'wPosts_queryPageNum', types);
 					//视频顶部标题
-					$("#my-page-header")[0].innerHTML=types;
+					$("#my-page-header")[0].innerHTML = types;
 				});
+
+				//跳转到发帖
+				$("#writeBlog").click(function() {
+					//判断是否登陆
+					var user = JSON.parse(sessionStorage.getItem("user"));
+					if(user != null)
+						window.open("posts/writeBlog.html");
+					else
+						alert("请登陆");
+				});
+
 			});
 		</script>
 	</body>
