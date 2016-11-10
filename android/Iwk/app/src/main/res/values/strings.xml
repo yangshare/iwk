@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">微课</string>
+    <string name="serverURL">http://picp.zicp.net/iwk/</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">设置</string>
+    <string name="title_activity_image_loader">视频</string>
+    <string name="nav_manage">管理</string>
+    <string name="nav_info">个人</string>
+    <string name="nav_video">视频</string>
+    <string name="my_contentDescription">视频图片</string>
+</resources>
