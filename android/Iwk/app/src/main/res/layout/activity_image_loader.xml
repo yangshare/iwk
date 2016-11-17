@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.iwk.yang.activity.ImageLoaderActivity">
-    <ListView
+    tools:context="com.iwk.yang.activity.VideoListLoaderActivity"
+    >
+    <com.iwk.yang.widget.XListView
         android:id="@+id/listView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"></ListView>
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        ></com.iwk.yang.widget.XListView>
 </RelativeLayout>

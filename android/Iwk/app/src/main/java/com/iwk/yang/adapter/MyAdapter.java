@@ -2,7 +2,6 @@ package com.iwk.yang.adapter;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +19,31 @@ public class MyAdapter extends BaseAdapter {
     private Context context;
     private List<Person> list;
     private LayoutInflater mInflater;
+    private int screenWidth;
     public ViewHolder holder;
+
+
+    public MyAdapter(Context context, List<Person> list, int screenWidth) {
+        this.context = context;
+        this.list = list;
+        this.screenWidth = screenWidth;
+        this.mInflater = LayoutInflater.from(context);
+    }
 
     public MyAdapter(Context context, List<Person> list) {
         this.context = context;
         this.list = list;
+        this.screenWidth = 0;
         this.mInflater = LayoutInflater.from(context);
+    }
+
+
+    class ViewHolder {
+        private TextView tv_title;
+        private TextView tv_author;
+        private TextView tv_clicks;
+        private TextView tv_times;
+        private ImageView iv_pic;
     }
 
     @Override
@@ -49,8 +67,9 @@ public class MyAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.itemone, null);
             holder = new ViewHolder();
-            holder.iv_image = (ImageView) convertView.findViewById(R.id.iv_image);
-            holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+            holder.tv_title=(TextView) convertView.findViewById(R.id.tv_title);
+            holder.iv_pic = (ImageView) convertView.findViewById(R.id.iv_pic);
+            holder.tv_author = (TextView) convertView.findViewById(R.id.tv_author);
             holder.tv_clicks = (TextView) convertView.findViewById(R.id.tv_clicks);
             holder.tv_times = (TextView) convertView.findViewById(R.id.tv_times);
 
@@ -59,18 +78,14 @@ public class MyAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         Person bean = list.get(position);
-        holder.tv_name.setText(bean.getName());
-        holder.tv_clicks.setText(bean.getClicks());
-        holder.tv_times.setText(bean.getTimes());
+        holder.tv_title.setText(bean.getTitle());
+        holder.tv_author.setText(bean.getAuthor());
+        holder.tv_clicks.setText(bean.getClicks().toString());
+        holder.tv_times.setText(bean.getTime());
 
-        MyVolley.getImage(bean.getImgUrl(), holder.iv_image, R.mipmap.ic_launcher, R.mipmap.ic_launcher,0,0);
+        MyVolley.getImage(bean.getPic(), holder.iv_pic, R.mipmap.ic_launcher, R.mipmap.ic_launcher, screenWidth, screenWidth);
         return convertView;
     }
 
-    class ViewHolder {
-        private TextView tv_name;
-        private TextView tv_clicks;
-        private TextView tv_times;
-        private ImageView iv_image;
-    }
+
 }

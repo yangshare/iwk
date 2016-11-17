@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iwk.yang.activity.VideoListLoaderActivity;
+import com.iwk.yang.activity.XListViewActivity;
+import com.iwk.yang.tool.ToastShow;
 import com.iwk.yang.volley.MyVolley;
 
 
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView textView;
+    private long mExitTime;
+    public ToastShow toastShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity
         //初始化MyVolley
         MyVolley.init(MainActivity.this);
         textView = (TextView) findViewById(R.id.textView);
+        toastShow = new ToastShow(MainActivity.this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -98,8 +104,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_video) {//跳转到视频
             Intent intent = new Intent(MainActivity.this, VideoListLoaderActivity.class);
             startActivity(intent);
-            Toast.makeText(MainActivity.this, "" + id, Toast.LENGTH_LONG).show();
+//            Toast.makeText(MainActivity.this, "" + id, Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_manage) {
+            XListViewActivity.launch(this);
             Toast.makeText(MainActivity.this, "" + id, Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.nav_info) {
@@ -112,8 +119,18 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                toastShow.makeText("再按一次退出程序", Toast.LENGTH_SHORT);
+                mExitTime = System.currentTimeMillis();
 
-
-
-
+            } else {
+                finish();
+            }
+            return true;//去掉就会直接退出
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
