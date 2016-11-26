@@ -2,6 +2,7 @@ package com.iwk.yang.application;
 
 import android.app.Application;
 
+import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.iwk.yang.volley.MyVolley;
 
 
@@ -16,6 +17,8 @@ public class MyApplication extends Application{
 
         //初始化MyVolley
         MyVolley.init(getApplicationContext());
+        //初始化Bootstrap
+        TypefaceProvider.registerDefaultIconSets();
 
     }
 }

@@ -9,7 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.iwk.yang.bean.FormImage;
+import com.iwk.yang.bean.Images;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,12 +22,12 @@ public class PostUploadRequest extends Request<String>{
      */
     private Listener mListener ;
     /*请求 数据通过参数的形式传入*/
-    private List<FormImage> mListItem ;
+    private List<Images> mListItem ;
 
     private String BOUNDARY = "--------------520-13-14"; //数据分隔线
     private String MULTIPART_FORM_DATA = "multipart/form-data";
 
-    public PostUploadRequest(String url, List<FormImage> listItem, Listener<String> listener,
+    public PostUploadRequest(String url, List<Images> listItem, Listener<String> listener,
 			ErrorListener errorListener) {
         super(Method.POST, url, errorListener);
         this.mListener = listener ;
@@ -71,7 +71,7 @@ public class PostUploadRequest extends Request<String>{
         ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
         int N = mListItem.size() ;
         for (int i = 0; i < N ;i++){
-        	FormImage formImage = mListItem.get(i) ;
+        	Images images = mListItem.get(i) ;
             StringBuffer sb= new StringBuffer() ;
             /*第一行*/
             //`"--" + BOUNDARY + "\r\n"`
@@ -81,16 +81,16 @@ public class PostUploadRequest extends Request<String>{
             //Content-Disposition: form-data; name="参数的名称"; filename="上传的文件名" + "\r\n"
             sb.append("Content-Disposition: form-data;");
             sb.append(" name=\"");
-            sb.append(formImage.getName()) ;
+            sb.append(images.getName()) ;
             sb.append("\"") ;
-            sb.append("; filename=\"") ;
-            sb.append(formImage.getFileName()) ;
+            sb.append("; imageFileName=\"") ;
+            sb.append(images.getImageFileName()) ;
             sb.append("\"");
             sb.append("\r\n") ;
             /*第三行*/
             //Content-Type: 文件的 mime 类型 + "\r\n"
             sb.append("Content-Type: ");
-            sb.append(formImage.getMime()) ;
+            sb.append(images.getMime()) ;
             sb.append("\r\n") ;
             /*第四行*/
             //"\r\n"
@@ -99,7 +99,7 @@ public class PostUploadRequest extends Request<String>{
                 bos.write(sb.toString().getBytes("utf-8"));
                 /*第五行*/
                 //文件的二进制数据 + "\r\n"
-                bos.write(formImage.getValue());
+                bos.write(images.getValue());
                 bos.write("\r\n".getBytes("utf-8"));
             } catch (IOException e) {
                 e.printStackTrace();

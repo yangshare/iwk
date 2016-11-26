@@ -6,11 +6,12 @@
     <!--获取网络状态权限-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--涉及到图片缓存需要加入的权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!--onConfigurationChanged-->
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <application
+        android:name="com.iwk.yang.application.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_menu_slideshow"
         android:label="@string/app_name"
@@ -22,20 +23,25 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-        android:name="com.iwk.yang.activity.VideoListLoaderActivity"
-        android:label="@string/title_activity_image_loader"></activity>
+            android:name="com.iwk.yang.activity.VideoListLoaderActivity"
+            android:label="@string/title_activity_image_loader"></activity>
         <activity
             android:name="com.iwk.yang.activity.XListViewActivity"
             android:label="@string/title_activity_image_loader"></activity>
+
         <activity
             android:name="com.iwk.yang.activity.VideoPlayerActivity"
-            android:label="@string/title_activity_image_loader"
-            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"></activity>
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:label="@string/title_activity_image_loader"></activity>
+        <activity
+            android:name="com.iwk.yang.activity.UploadVideoActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:label="上传"></activity>
     </application>
 
 </manifest>

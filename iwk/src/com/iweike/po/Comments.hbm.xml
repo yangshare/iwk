@@ -26,8 +26,8 @@
 		<property name="author" type="java.lang.String">
 			<column name="author" length="50" />
 		</property>
-		<property name="videoId" type="java.lang.Integer">
-			<column name="video_id" />
+		<property name="typesId" type="java.lang.Integer">
+			<column name="typesId" />
 		</property>
 		<property name="isShow" type="java.lang.String">
 			<column name="isShow" length="10" />

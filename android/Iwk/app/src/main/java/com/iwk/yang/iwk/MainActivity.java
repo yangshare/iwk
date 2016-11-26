@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.iwk.yang.activity.UploadVideoActivity;
 import com.iwk.yang.activity.VideoListLoaderActivity;
 import com.iwk.yang.activity.XListViewActivity;
 import com.iwk.yang.tool.ToastShow;
@@ -25,11 +25,12 @@ import com.iwk.yang.volley.MyVolley;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
-    TextView textView;
+    private TextView textView;
     private long mExitTime;
-    public ToastShow toastShow;
+    private ToastShow toastShow;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +43,9 @@ public class MainActivity extends AppCompatActivity
         textView = (TextView) findViewById(R.id.textView);
         toastShow = new ToastShow(MainActivity.this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(MyOnClick);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,10 +103,10 @@ public class MainActivity extends AppCompatActivity
 //            Toast.makeText(MainActivity.this, "" + id, Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_manage) {
             XListViewActivity.launch(this);
-            Toast.makeText(MainActivity.this, "" + id, Toast.LENGTH_LONG).show();
+            toastShow.makeText("" + id, Toast.LENGTH_LONG);
 
         } else if (id == R.id.nav_info) {
-            Toast.makeText(MainActivity.this, "" + id, Toast.LENGTH_LONG).show();
+            toastShow.makeText("" + id, Toast.LENGTH_LONG);
 
         }
 
@@ -133,4 +129,22 @@ public class MainActivity extends AppCompatActivity
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    /**
+     * 自定义点击函数
+     */
+    public View.OnClickListener  MyOnClick =new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.fab:
+                   Intent intent=new Intent(MainActivity.this, UploadVideoActivity.class);
+                    startActivity(intent);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
 }

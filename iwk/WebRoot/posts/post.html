@@ -137,10 +137,10 @@
 
 			<div class="container">
 				<!--正文****************************************************************************-->
-				<div class="page-header" style="white-space: nowrap;">
+				<div class="page-header">
 					<h1>
 						<small id="my-page-header">正文</small>
-						<button id="goComment" class="btn" style="background-color: white;float: right;">评论</button>
+						<button id="goCommentDiv" class="btn" style="background-color: white;float: right;">评论</button>
 					</h1>
 
 				</div>
@@ -186,11 +186,12 @@
 					</div>
 
 				</div>
-				<div class="row" id="submitComment">
+				<!--提交评论框\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
+				<div class="row" id="commentDiv">
 					<div class="col-lg-12">
 						<div class="input-group">
 							<span class="input-group-btn">
-							    <button class="btn btn-default" type="button">提交评论</button>
+							    <button id="submitComment" class="btn btn-default" type="button">提交评论</button>
 							</span>
 							<input id="commentContent" type="text" class="form-control" placeholder="写吧，我知道你想说点什么！">
 						</div>
@@ -200,6 +201,7 @@
 				<!-- /.row -->
 				<br />
 				<br />
+				<!--返回顶部框\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
 				<div class="well well-sm" style="text-align: center;">
 					<a href="#">返回顶部</a>
 				</div>
@@ -256,17 +258,17 @@
 			//通过id查post
 			queryPostById(myUrl + "wPosts_queryPostById", postId);
 			//跳到评论
-			$("#goComment").click(function() {
-				window.location.href = "#submitComment";
+			$("#goCommentDiv").click(function() {
+				window.location.href = "#commentDiv";
 			});
-			//跳转到发帖
+			//提交評論
 			$("#submitComment").click(function() {
 				//判断是否登陆
 				var user = JSON.parse(sessionStorage.getItem("user"));
 				var commentContent = $("#commentContent").val();
 				if(user != null) {
 					if(commentContent.trim() != "")
-						window.open("posts/writeBlog.html");
+						submitComment(myUrl + "wComments_addComments", commentContent, user);
 					else
 						alert("请写点啥");
 
@@ -293,7 +295,7 @@
 						//							$("#loadMoreImg").removeAttr("hidden");
 					},
 					success: function(data) {
-						console.log(JSON.parse(data.jsonStr).contents);
+						//						console.log(JSON.parse(data.jsonStr).contents);
 						$("#postContent").html(JSON.parse(data.jsonStr).contents);
 						$("#my-page-header").html(JSON.parse(data.jsonStr).title);
 					},
@@ -318,10 +320,14 @@
 			}
 
 			//提交评论
-			function submitComment(urls, id) {
+			function submitComment(urls, commentContent, user) {
 				$.ajax({
 					data: {
-						post_id: id
+						contents: commentContent,
+						author: user.name,
+						objId: user.id,
+						types: "帖子",
+						typesId: postId // 视频编号或帖子编号
 					},
 					type: 'GET',
 					url: urls,
@@ -331,9 +337,11 @@
 						//							$("#loadMoreImg").removeAttr("hidden");
 					},
 					success: function(data) {
-						console.log(JSON.parse(data.jsonStr).contents);
-						$("#postContent").html(JSON.parse(data.jsonStr).contents);
-						$("#my-page-header").html(JSON.parse(data.jsonStr).title);
+						alert(data.jsonStr);
+						if(data.jsonStr == "评论添加成功") {
+							$("#commentContent").val("");
+						}
+
 					},
 					error: function() {
 						console.log('网络异常');

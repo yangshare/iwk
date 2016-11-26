@@ -28,9 +28,9 @@ public class wPostsAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * 前台获取视频类 属性： 1.前后台通信对象request，response； 2.struts配置返回的json串，必须有set方法配套 方法：
-	 * 1.获取所有视频信息===getAllVideo(); 2.通过id获取单个视频信息===getVideoById();
-	 * 3.通过类型获取一类视频信息===getVideoByType(); 4.集合内对象类别转换;
+	 * 前台获取帖子类 属性： 1.前后台通信对象request，response； 2.struts配置返回的json串，必须有set方法配套 方法：
+	 * 1.获取所有帖子信息===getAllVideo(); 2.通过id获取单个帖子信息===getVideoById();
+	 * 3.通过类型获取一类帖子信息===getVideoByType(); 4.集合内对象类别转换;
 	 */
 	// 1.前后台通信对象request，response
 	HttpServletRequest request = ServletActionContext.getRequest();
@@ -126,7 +126,7 @@ public class wPostsAction extends ActionSupport {
 	// 实例化Dao包
 	Iwk_postsDaoImpl PostsDao = new Iwk_postsDaoImpl();
 
-	// 1.获取所有视频信息
+	// 1.获取所有帖子信息
 	@SuppressWarnings("unchecked")
 	public String queryAllPosts() {
 		try {
@@ -139,7 +139,7 @@ public class wPostsAction extends ActionSupport {
 		}
 	}
 
-	// 2.获取热播视频信息
+	// 2.获取热播帖子信息
 	@SuppressWarnings("unchecked")
 	public String queryPopPosts() {
 		try {
@@ -153,7 +153,7 @@ public class wPostsAction extends ActionSupport {
 		}
 	}
 
-	// 3.获取最新视频信息
+	// 3.获取最新帖子信息
 	@SuppressWarnings("unchecked")
 	public String queryLastPosts() {
 		try {
@@ -203,7 +203,7 @@ public class wPostsAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	// 7.视频入库
+	// 7.帖子入库
 	public String addPosts() {
 		posts = new Posts();
 		// 获取时间戳
@@ -222,7 +222,7 @@ public class wPostsAction extends ActionSupport {
 		posts.setTime(dateSr);// 上传时间
 
 		posts.setObjId(obj_id.trim());
-		posts.setIsShow(0 + "");// 是否上架展示
+		posts.setIsShow("0");// 是否上架展示
 		try {
 			this.jsonStr = PostsDao.save(posts) ? "帖子添加成功" : "帖子添加失败";
 			return SUCCESS;
@@ -233,7 +233,7 @@ public class wPostsAction extends ActionSupport {
 	}
 
 
-	// 9.获取最新视频信息
+	// 9.获取最新帖子信息
 	@SuppressWarnings("unchecked")
 	public String queryPagePosts() {
 		try {
@@ -257,7 +257,7 @@ public class wPostsAction extends ActionSupport {
 		}
 	}
 	
-	// 10.获取各类视频个数
+	// 10.获取各类帖子个数
 	public String queryPageNumByTypes() {
 		try {
 			
@@ -269,7 +269,7 @@ public class wPostsAction extends ActionSupport {
 		}
 	}
 	
-	// 10.获取各类视频个数
+	// 10.获取各类帖子个数
 	public String queryPostById() {
 		try {
 			JSONObject jsonObject=JSONObject.fromObject(PostsDao.queryById(Integer.parseInt(post_id.trim())));

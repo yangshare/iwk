@@ -3,7 +3,7 @@ package com.iwk.yang.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,12 +12,13 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.iwk.yang.adapter.MyAdapter;
 import com.iwk.yang.bean.Person;
 import com.iwk.yang.iwk.R;
 import com.iwk.yang.tool.ToastShow;
+import com.iwk.yang.tool.UrlAppendParameter;
+import com.iwk.yang.volley.MyJsonObjectRequest;
 import com.iwk.yang.widget.XListView;
 
 import org.json.JSONArray;
@@ -27,15 +28,17 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**
  * Created by Administrator on 2016/11/15 0015.
  * 本activity用于视频列表的获取和显示
  */
-public class VideoListLoaderActivity extends ActionBarActivity {
+public class VideoListLoaderActivity extends AppCompatActivity {
     private XListView listView;
     private List<Person> list;
     private MyAdapter adapter;
@@ -54,6 +57,7 @@ public class VideoListLoaderActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_loader);
+
         listView = (XListView) findViewById(R.id.listView);
         listView.setPullRefreshEnable(true);
         listView.setPullLoadEnable(true);
@@ -88,10 +92,13 @@ public class VideoListLoaderActivity extends ActionBarActivity {
     public void queryPageNum() {
         Toast.makeText(VideoListLoaderActivity.this, "加载中.....", Toast.LENGTH_LONG).show();
         //获取视频列表action
-        String url = getResources().getText(R.string.serverURL)+"wVideo_queryPageNum?types=a";
+        String url = getResources().getText(R.string.serverURL)+"wVideo_queryPageNum";
         // 2 创建StringRequest对象
-        JsonObjectRequest queryPageNumRequest = new JsonObjectRequest(url,
-                null,
+        Map<String,String> map=new HashMap<>();
+        map.put("types","全部");
+        String params = UrlAppendParameter.appendParameter(url,map);
+        MyJsonObjectRequest queryPageNumRequest = new MyJsonObjectRequest(url,
+                params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -100,7 +107,7 @@ public class VideoListLoaderActivity extends ActionBarActivity {
                             mIndex = Integer.parseInt(response.get("jsonStr").toString());
                         } catch (Exception e) {
                             Log.e("queryPageNumjson解析异常：", e.getMessage(), e);
-                            Toast.makeText(VideoListLoaderActivity.this, "json解析异常", Toast.LENGTH_LONG).show();
+                            toastShow.makeText("json解析异常", Toast.LENGTH_LONG);
                         }
                     }
                 },
@@ -109,7 +116,7 @@ public class VideoListLoaderActivity extends ActionBarActivity {
                     public void onErrorResponse(VolleyError error) {
 //                        byte[] htmlBodyBytes = error.networkResponse.data;
                         Log.e("请求异常：", error.getMessage(), error);
-                        Toast.makeText(VideoListLoaderActivity.this, "网络或者服务器异常", Toast.LENGTH_LONG).show();
+                        toastShow.makeText("网络或者服务器异常", Toast.LENGTH_LONG);
 
                     }
                 }
@@ -126,10 +133,14 @@ public class VideoListLoaderActivity extends ActionBarActivity {
     public void LoadVideoList() {
         toastShow.makeText("加载中.....", Toast.LENGTH_LONG);
         //获取视频列表action
-        String url = getResources().getText(R.string.serverURL)+"wVideo_queryPageVideo?curPage=" + mRefreshIndex + "&types=a";
+        String url = getResources().getText(R.string.serverURL)+"wVideo_queryPageVideo";
         // 2 创建StringRequest对象
-        JsonObjectRequest LoadVideoListRequest = new JsonObjectRequest(url,
-                null,
+        Map<String,String> map=new HashMap<>();
+        map.put("curPage",""+mRefreshIndex);
+        map.put("types","全部");
+        String params = UrlAppendParameter.appendParameter(url,map);
+        MyJsonObjectRequest LoadVideoListRequest = new MyJsonObjectRequest(url,
+                params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -149,7 +160,7 @@ public class VideoListLoaderActivity extends ActionBarActivity {
                             mRefreshIndex++;
                         } catch (Exception e) {
                             Log.e("json解析异常：", e.getMessage(), e);
-                            Toast.makeText(VideoListLoaderActivity.this, "json解析异常", Toast.LENGTH_LONG).show();
+                            toastShow.makeText("json解析异常", Toast.LENGTH_LONG);
                         }
                     }
                 },
@@ -158,7 +169,7 @@ public class VideoListLoaderActivity extends ActionBarActivity {
                     public void onErrorResponse(VolleyError error) {
 //                        byte[] htmlBodyBytes = error.networkResponse.data;
                         Log.e("请求异常：", error.getMessage(), error);
-                        Toast.makeText(VideoListLoaderActivity.this, "网络或者服务器异常", Toast.LENGTH_LONG).show();
+                        toastShow.makeText("网络或者服务器异常", Toast.LENGTH_LONG);
 
                     }
                 }
@@ -268,6 +279,8 @@ public class VideoListLoaderActivity extends ActionBarActivity {
     private String getTime() {
         return new SimpleDateFormat("MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
     }
+
+
 
 
 }

@@ -38,7 +38,7 @@
             <column name="obj_id" length="50" />
         </property>
          <property name="isShow" type="java.lang.String">
-            <column name="isShow" length="10" />
+            <column name="isShow" length="1" />
         </property>
     </class>
 </hibernate-mapping>

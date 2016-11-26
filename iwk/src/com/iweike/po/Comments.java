@@ -20,8 +20,8 @@ public class Comments {
 	private String contents;// 评论内容
 	private String author;// 评论人
 
-	private Integer objId;
-	private Integer videoId;// 视频编号
+	private Integer objId;//评论人id
+	private Integer typesId;// 视频编号或帖子编号
 	
 	private String isShow;//审核通过
 
@@ -87,13 +87,14 @@ public class Comments {
         this.author = author;
     }
 
-    public Integer getVideoId() {
-        return this.videoId;
-    }
-    
-    public void setVideoId(Integer videoId) {
-        this.videoId = videoId;
-    }
+	public Integer getTypesId() {
+		return typesId;
+	}
+
+	public void setTypesId(Integer typesId) {
+		this.typesId = typesId;
+	}
+
    
 
 

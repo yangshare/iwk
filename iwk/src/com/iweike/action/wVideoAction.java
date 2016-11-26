@@ -1,6 +1,7 @@
 package com.iweike.action;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
+
+import sun.misc.BASE64Decoder;
+
 import com.iweike.daoimpl.Iwk_videoDaoImpl;
 import com.iweike.po.Video;
 import com.iweike.tool.FileUploadTool;
@@ -62,6 +66,17 @@ public class wVideoAction extends ActionSupport {
 	private String imageFileName;
 	private File upload;
 	private String uploadFileName;
+
+	private String terminalImage;// 终端（Android）图片
+	private String terminalUpload;// 终端（Android）视频
+
+	public void setTerminalImage(String terminalImage) {
+		this.terminalImage = terminalImage;
+	}
+
+	public void setTerminalUpload(String terminalUpload) {
+		this.terminalUpload = terminalUpload;
+	}
 
 	public void setImage(File image) {
 		this.image = image;
@@ -196,10 +211,25 @@ public class wVideoAction extends ActionSupport {
 	 */
 	// 5.上传文件
 	public String uploadVideo() {
+//		System.out.println("terminalUpload*************************=" + terminalUpload);
+		System.out.println("uploadFileName=" + uploadFileName);
 		String filePath = "";
-		if (upload != null) {
-			filePath = fileUploadTool
-					.uploadImg(upload, uploadFileName, "video");
+		if (terminalUpload != null) {
+			// 对base64数据进行解码 生成 字节数组，不能直接用Base64.decode（）；进行解密
+			try {
+				byte[] videoBytes = new BASE64Decoder()
+						.decodeBuffer(terminalUpload);
+				filePath = fileUploadTool.uploadImg(videoBytes, uploadFileName,
+						"video");
+			} catch (IOException e) {
+				System.out.println("uploadImg的IOException：" + e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			if (upload != null) {
+				filePath = fileUploadTool.uploadImg(upload, uploadFileName,
+						"video");
+			}
 		}
 		this.jsonStr = "upload/video/"
 				+ filePath.substring(filePath.lastIndexOf("\\") + 1);
@@ -208,9 +238,25 @@ public class wVideoAction extends ActionSupport {
 
 	// 6.上传图片
 	public String uploadImg() {
+//		System.out.println("terminal************************************=" + terminalImage);
+		System.out.println("imageFileName=" + imageFileName);
 		String filePath = "";
-		if (image != null) {
-			filePath = fileUploadTool.uploadImg(image, imageFileName, "img");
+		if (terminalImage != null) {
+			// 对base64数据进行解码 生成 字节数组，不能直接用Base64.decode（）；进行解密
+			try {
+				byte[] photoimg = new BASE64Decoder()
+						.decodeBuffer(terminalImage);
+				filePath = fileUploadTool.uploadImg(photoimg, imageFileName,
+						"img");
+			} catch (IOException e) {
+				System.out.println("uploadImg的IOException：" + e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			if (image != null) {
+				filePath = fileUploadTool
+						.uploadImg(image, imageFileName, "img");
+			}
 		}
 
 		this.jsonStr = "upload/img/"
@@ -238,7 +284,7 @@ public class wVideoAction extends ActionSupport {
 
 		video.setSrcs(backVideoPath.trim());
 		video.setObjId(obj_id.trim());
-		video.setIsShow(0 + "");// 是否上架展示
+		video.setIsShow("0");// 是否上架展示
 		try {
 			this.jsonStr = videoDao.save(video) ? "视频添加成功" : "视频添加失败";
 			return SUCCESS;
@@ -266,7 +312,8 @@ public class wVideoAction extends ActionSupport {
 	@SuppressWarnings("unchecked")
 	public String queryPageVideo() {
 		try {
-			JSONArray jsonList = JSONArray.fromObject(videoDao.queryPageVideo(curPage, HOME_PerPageRow,"types",types));
+			JSONArray jsonList = JSONArray.fromObject(videoDao.queryPageVideo(
+					curPage, HOME_PerPageRow, "types", types));
 			this.json = jsonList;
 			return SUCCESS;
 		} catch (Exception e) {
@@ -274,22 +321,25 @@ public class wVideoAction extends ActionSupport {
 			return ERROR;
 		}
 	}
-	
+
 	// 10.获取总页面
 	public String queryPageNum() {
 		try {
-			this.jsonStr =""+(int)Math.ceil(videoDao.queryRecordNum("types",types)/HOME_PerPageRow);
+			this.jsonStr = ""
+					+ (int) Math.ceil(videoDao.queryRecordNum("types", types)
+							/ HOME_PerPageRow);
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
 	}
-	
+
 	// 10.获取各类视频个数
 	public String queryPageNumByTypes() {
 		try {
-			this.jsonStr =""+(int)videoDao.queryPageNumByTypes("types",types);
+			this.jsonStr = ""
+					+ (int) videoDao.queryPageNumByTypes("types", types);
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="bootstrap_dropdown_example_data">
+        <item>{dropdown_header}choose anyone</item>
+        <item>计算机</item>
+        <item>美术</item>
+        <item>环境建设</item>
+        <item>其他</item>
+    </array>
+</resources>

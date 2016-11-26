@@ -10,13 +10,14 @@ import java.util.Date;
 import org.apache.struts2.ServletActionContext;
 
 public class FileUploadTool {
-	
-	// 上传图片
-	public String uploadImg(File file, String fileFileName,String content){
-		System.out.println("获取文件路径=="+fileFileName);
+
+	// 上传图片(File)
+	public String uploadImg(File file, String fileFileName, String content) {
+		System.out.println("获取文件路径==" + fileFileName);
 		// 得到工程保存图片的路径
 		@SuppressWarnings("deprecation")
-		String root = ServletActionContext.getRequest().getRealPath("/upload/"+content);
+		String root = ServletActionContext.getRequest().getRealPath(
+				"/upload/" + content);
 
 		InputStream is;
 		OutputStream os;
@@ -25,13 +26,13 @@ public class FileUploadTool {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String str = sdf.format(date);
 		try {
-			
+
 			// 用时间戳命名图片
 			fileFileName = str
 					+ fileFileName.substring(fileFileName.lastIndexOf("."));
 			is = new FileInputStream(file);
 			// 保存头像
-			fileFileName = System.currentTimeMillis()+"_" + fileFileName;
+			fileFileName = System.currentTimeMillis() + "_" + fileFileName;
 
 			// 得到图片保存的位置(根据root来得到图片保存的路径在Tomcat下的该工程里)
 			File destFile = new File(root, fileFileName);
@@ -45,14 +46,55 @@ public class FileUploadTool {
 			}
 			os.close();
 			is.close();
-			System.out.println("返回文件路径=="+destFile.getPath());
+			System.out.println("返回文件路径==" + destFile.getPath());
 			return destFile.getPath();
 		} catch (Exception e) {
 			System.out.println("文件上传工具类异常：" + e.getMessage());
 			e.printStackTrace();
 			return "默认图片";
 		}
-		
+
+	}
+
+	// 上传图片(Byte[])
+	public String uploadImg(byte[] bytes, String fileFileName, String content) {
+		System.out.println("获取文件路径==" + fileFileName);
+		// 得到工程保存图片的路径
+		@SuppressWarnings("deprecation")
+		String root = ServletActionContext.getRequest().getRealPath(
+				"/upload/" + content);
+
+		OutputStream os;
+		// 获取时间戳
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String str = sdf.format(date);
+		try {
+
+			// 用时间戳命名图片
+			fileFileName = str
+					+ fileFileName.substring(fileFileName.lastIndexOf("."));
+			// 保存头像
+			fileFileName = System.currentTimeMillis() + "_" + fileFileName;
+
+			// 得到图片保存的位置(根据root来得到图片保存的路径在Tomcat下的该工程里)
+			File destFile = new File(root, fileFileName);
+
+			if (!destFile.exists()) {
+				destFile.createNewFile();
+			}
+			// 把图片写入到上面设置的路径里
+			os = new FileOutputStream(destFile);
+			os.write(bytes);
+			os.close();
+			System.out.println("返回文件路径==" + destFile.getPath());
+			return destFile.getPath();
+		} catch (Exception e) {
+			System.out.println("文件上传工具类异常：" + e.getMessage());
+			e.printStackTrace();
+			return "默认图片";
+		}
+
 	}
 
 }

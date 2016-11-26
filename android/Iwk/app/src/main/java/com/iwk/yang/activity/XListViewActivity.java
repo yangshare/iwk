@@ -1,10 +1,10 @@
 package com.iwk.yang.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 
 import com.iwk.yang.iwk.R;
@@ -21,7 +21,7 @@ import java.util.Locale;
  * @author markmjw
  * @date 2013-10-08
  */
-public class XListViewActivity extends Activity implements XListView.IXListViewListener {
+public class XListViewActivity extends AppCompatActivity implements XListView.IXListViewListener {
     private XListView mListView;
 
     private ArrayAdapter<String> mAdapter;
