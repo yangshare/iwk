@@ -11,16 +11,52 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.iwk.yang.iwk.MainActivity"
-    tools:showIn="@layout/app_bar_main">
-
-    <TextView
-        android:id="@+id/textView"
+    tools:showIn="@layout/app_bar_main"
+    >
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+       <com.beardedhen.androidbootstrap.BootstrapLabel
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="欢迎您！"
+           app:bootstrapBrand="secondary"
+           app:bootstrapHeading="h3"/>
+       <com.beardedhen.androidbootstrap.BootstrapLabel
+           android:id="@+id/index_name"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="游客"
+           app:bootstrapBrand="secondary"
+           app:bootstrapHeading="h5"/>
+   </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-    <include
-        layout="@layout/activity_image_loader"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/bt_login"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="5dp"
+            android:text="登陆"
+            android:backgroundTint="@color/colorAccent"
+            app:bootstrapSize="xl"
+            app:bootstrapBrand="info"
+            app:roundedCorners="true" />
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:layout_marginTop="15dp"
+            android:id="@+id/bt_regist"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="5dp"
+            android:text="注册"
+            android:backgroundTint="@color/colorAccent"
+            app:bootstrapSize="xl"
+            app:bootstrapBrand="info"
+            app:roundedCorners="true" />
+    </LinearLayout>
 </RelativeLayout>

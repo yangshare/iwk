@@ -3,11 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.iwk.yang.activity.VideoListLoaderActivity"
-    >
+    tools:context="com.iwk.yang.activity.VideoListLoaderActivity">
+    <!-- Login progress -->
+    <ProgressBar
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/loading_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible" />
+
     <com.iwk.yang.widget.XListView
+        android:visibility="gone"
         android:id="@+id/listView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        ></com.iwk.yang.widget.XListView>
+        android:layout_height="match_parent"></com.iwk.yang.widget.XListView>
 </RelativeLayout>

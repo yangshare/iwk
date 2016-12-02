@@ -1,6 +1,10 @@
 package com.iwk.yang.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -52,12 +56,16 @@ public class VideoListLoaderActivity extends AppCompatActivity {
     private int mIndex = 0;
     private int mRefreshIndex = 0;
 
+    private View mProgressView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_loader);
 
+        //加载动画
+        mProgressView = findViewById(R.id.loading_progress);
         listView = (XListView) findViewById(R.id.listView);
         listView.setPullRefreshEnable(true);
         listView.setPullLoadEnable(true);
@@ -144,6 +152,7 @@ public class VideoListLoaderActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        showProgress(false);
                         try {
                             Log.i("response返回：", response.toString());
                             Log.i("返回：", response.getJSONArray("json").toString());
@@ -167,7 +176,7 @@ public class VideoListLoaderActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        byte[] htmlBodyBytes = error.networkResponse.data;
+                        showProgress(false);
                         Log.e("请求异常：", error.getMessage(), error);
                         toastShow.makeText("网络或者服务器异常", Toast.LENGTH_LONG);
 
@@ -278,6 +287,39 @@ public class VideoListLoaderActivity extends AppCompatActivity {
 
     private String getTime() {
         return new SimpleDateFormat("MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
+    }
+
+    /**
+     * 加载动画现隐藏和显示
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            listView.setVisibility(show ? View.GONE : View.VISIBLE);
+            listView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    listView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            listView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
 

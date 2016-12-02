@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Iwk.iml" filepath="$PROJECT_DIR$/Iwk.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/greendaoauto/greendaoauto.iml" filepath="$PROJECT_DIR$/greendaoauto/greendaoauto.iml" />
     </modules>
   </component>
 </project>

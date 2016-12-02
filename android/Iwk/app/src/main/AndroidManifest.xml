@@ -10,6 +10,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!--onConfigurationChanged-->
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <application
         android:name="com.iwk.yang.application.MyApplication"
         android:allowBackup="true"
@@ -32,7 +36,7 @@
             android:label="@string/title_activity_image_loader"></activity>
         <activity
             android:name="com.iwk.yang.activity.XListViewActivity"
-            android:label="@string/title_activity_image_loader"></activity>
+            android:label="@string/nav_manage"></activity>
 
         <activity
             android:name="com.iwk.yang.activity.VideoPlayerActivity"
@@ -40,8 +44,11 @@
             android:label="@string/title_activity_image_loader"></activity>
         <activity
             android:name="com.iwk.yang.activity.UploadVideoActivity"
-            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:label="上传"></activity>
+        <activity
+            android:name="com.iwk.yang.activity.LoginActivity"
+            android:label="登陆"></activity>
+
     </application>
 
 </manifest>

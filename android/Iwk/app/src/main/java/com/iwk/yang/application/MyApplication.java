@@ -19,6 +19,6 @@ public class MyApplication extends Application{
         MyVolley.init(getApplicationContext());
         //初始化Bootstrap
         TypefaceProvider.registerDefaultIconSets();
-
     }
+
 }

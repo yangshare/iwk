@@ -138,10 +138,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:maxLength="1200"
+            android:maxLength="12"
             app:bootstrapBrand="info"
             app:bootstrapSize="md"
-            app:roundedCorners="true" />
+            app:roundedCorners="true"
+            android:hint="12字以内"/>
         <!--*******************视频类型-->
         <com.beardedhen.androidbootstrap.BootstrapLabel
             android:layout_width="wrap_content"
