@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
@@ -58,7 +60,7 @@ public class wUserAction extends ActionSupport {
 
 	// 4.用户信息
 	// Fields
-
+	private String user_id;//用户id
 	private String icons;// 头像
 
 	private String name;// 登陆名（昵称）
@@ -77,8 +79,13 @@ public class wUserAction extends ActionSupport {
 
 	// Property accessors
 
+	
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setUser_id(String userId) {
+		user_id = userId;
 	}
 
 	public void setPwd(String pwd) {
@@ -139,22 +146,22 @@ public class wUserAction extends ActionSupport {
 		user = new User();
 		try {
 			icons=uploadImg();
-			user.setIcons(icons);// 头像
+			user.setIcons(icons.trim());// 头像
 
 			user.setId(userDao.queryLastRecordId() + 1);// 编号
-			user.setName(name);// 登陆名（昵称）
-			user.setPwd(pwd);// 登陆密码
-			user.setQuestion(question);// 找回密码问题
-			user.setAnswer(answer);// 找回密码答案
-			user.setSchool(school);// 学校
-			user.setCollege(college);// 学院
-			user.setProfessional(professional);// 专业
-			user.setClazz(clazz);// 班级
-			user.setSno(sno);// 学号
-			user.setSname(sname);// 学生姓名
-			user.setSsex(ssex);// 学生性别
-			user.setEmail(email);// 邮箱
-			user.setIntroduce(introduce);// 自我介绍
+			user.setName(name.trim());// 登陆名（昵称）
+			user.setPwd(pwd.trim());// 登陆密码
+			user.setQuestion(question.trim());// 找回密码问题
+			user.setAnswer(answer.trim());// 找回密码答案
+			user.setSchool(school.trim());// 学校
+			user.setCollege(college.trim());// 学院
+			user.setProfessional(professional.trim());// 专业
+			user.setClazz(clazz.trim());// 班级
+			user.setSno(sno.trim());// 学号
+			user.setSname(sname.trim());// 学生姓名
+			user.setSsex(ssex.trim());// 学生性别
+			user.setEmail(email.trim());// 邮箱
+			user.setIntroduce(introduce.trim());// 自我介绍
 			
 			if(userDao.save(user))
 				return "regSuccess";
@@ -216,6 +223,30 @@ public class wUserAction extends ActionSupport {
 			}else
 				this.jsonStr = null;
 			
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+	// 5.获取所有用户信息
+	@SuppressWarnings("unchecked")
+	public String queryAllUser() {
+		try {
+			JSONArray jsonList = JSONArray.fromObject(userDao.queryAll());
+			this.json = jsonList;
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+	
+	// 6.通过Id删除用户
+	public String deleteUserById() {
+		try {
+			this.jsonStr = ""
+					+ userDao.delect(Integer.parseInt(user_id));
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();

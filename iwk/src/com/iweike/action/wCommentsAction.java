@@ -218,7 +218,7 @@ public class wCommentsAction extends ActionSupport {
 		}
 	}
 
-	// 10.获取各类评论个数
+	// 11.获取各类评论个数
 	public String queryPageNumByTypes() {
 		try {
 
@@ -231,12 +231,24 @@ public class wCommentsAction extends ActionSupport {
 		}
 	}
 
-	// 10.获取各类评论个数
+	// 12.获取各类评论个数
 	public String queryCommentById() {
 		try {
 			JSONObject jsonObject = JSONObject.fromObject(CommentsDao
 					.queryById(id));
 			this.jsonStr = "" + jsonObject;
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+	
+	// 13.通过Id删除用户
+	public String deleteCommentById() {
+		try {
+			this.jsonStr = ""
+					+ CommentsDao.delect(id);
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -162,6 +162,12 @@ public class Iwk_commentsDaoImpl {
 			return Double.parseDouble(""+0);
 		}
 	}
+	
+	// 13.通过id删除对象
+	public boolean delect(int id) {
+		comments=new Comments();
+		return iwkDao.delete(id, comments);
+	}
 
 
 	

@@ -43,7 +43,7 @@ public class Iwk_userDaoImpl {
 	// 6.通过学号查询该用户
 	public User queryUserBySno(String sno) {
 		user = new User();
-		List<User> uLsit=Object2Other(iwkDao.query(user, "sno", sno));
+		List<User> uLsit = Object2Other(iwkDao.query(user, "sno", sno));
 		if (uLsit != null)
 			return uLsit.get(0);
 		else
@@ -54,10 +54,10 @@ public class Iwk_userDaoImpl {
 	// 6.通过昵称查询该用户
 	public User queryUserByName(String name) {
 		user = new User();
-		List<User> uLsit=Object2Other(iwkDao.query(user, "name", name));
-		System.out.println(uLsit);
-		if ( uLsit!= null)
-			return uLsit.get(0);
+		List<User> uList = Object2Other(iwkDao.query(user, "name", name));
+		System.out.println(uList);
+		if (uList != null && !uList.toString().equals("[]"))
+			return uList.get(0);
 		else
 			return null;
 	}
@@ -71,6 +71,18 @@ public class Iwk_userDaoImpl {
 		} catch (Exception e) {
 			System.out.println("用户queryLastRecordId方法异常：" + e.getMessage());
 			return 0;
+		}
+
+	}
+	// 11.获取所有记录，返回集合；
+	public List<User> queryAll() {
+		user = new User();
+		try {
+
+			return Object2Other(iwkDao.query(user));
+		} catch (Exception e) {
+			System.out.println("Iwk_userDaoImpl的queryAll报错：" + e.getMessage());
+			return null;
 		}
 
 	}

@@ -321,9 +321,25 @@ public class wVideoAction extends ActionSupport {
 			return ERROR;
 		}
 	}
+	
+	// 9.查询单人的视频
+	@SuppressWarnings("unchecked")
+	public String queryPageVideoByObjid() {
+		try {
+			JSONArray jsonList = JSONArray.fromObject(videoDao.queryPageVideoByObjid(
+					"objId", obj_id));
+			this.json = jsonList;
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+
 
 	// 10.获取总页面
 	public String queryPageNum() {
+		System.out.println("types"+types);
 		try {
 			this.jsonStr = ""
 					+ (int) Math.ceil(videoDao.queryRecordNum("types", types)
@@ -346,5 +362,18 @@ public class wVideoAction extends ActionSupport {
 			return ERROR;
 		}
 	}
+	
+	// 10.通过Id删除视频
+	public String deleteVideoById() {
+		try {
+			this.jsonStr = ""
+					+ videoDao.delectById(Integer.parseInt(video_Id));
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+
 
 }

@@ -2,7 +2,8 @@
  * ajax访问地址
  */
 //var myUrl = "http://127.0.0.1:8080/iwk/"; //阿里服务器
-var myUrl = "http://127.0.0.1:8080/iwk/"; //阿里服务器
+//var myUrl = "http://127.0.0.1:8080/iwk/"; //本地
+var myUrl = "http://192.168.253.1:8080//iwk/"; //本地
 /**
  * 前台toast提示码
  *	Code码	含义	备注
