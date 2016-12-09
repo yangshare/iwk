@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">微课</string>
     <!--<string name="serverURL">http://picp.zicp.net/iwk/</string>-->
-    <string name="serverURL">http://192.168.253.1:8080/iwk/</string>
+    <string name="serverURL">http://192.168.156.1:8080/iwk/</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">设置</string>

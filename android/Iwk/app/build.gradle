@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -17,9 +18,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets{
-        main{
-            java.srcDirs = ['src/main/java','src/main/java-gen']
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/java-gen']
         }
     }
 }
@@ -40,3 +41,5 @@ dependencies {
     compile 'com.android.support:support-v4:25.0.1'
     compile 'com.daimajia.swipelayout:library:1.2.0'
 }
+
+

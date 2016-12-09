@@ -364,7 +364,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                                 System.out.println(user.getName());
                                 userDao.insertUser(user);
-                                System.out.println("datanickname==" + data.get("name").toString());
+                                System.out.println("datanickname==" + data.get("icons").toString());
                                 //登陆成功
                                 Intent loginIntent = new Intent();
                                 Bundle bundle = new Bundle();

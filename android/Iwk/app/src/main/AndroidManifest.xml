@@ -37,6 +37,9 @@
         <activity
             android:name="com.iwk.yang.activity.XListViewActivity"
             android:label="@string/nav_manage"></activity>
+        <activity
+            android:name="com.iwk.yang.activity.UserInfoActivity"
+            android:label="个人"></activity>
 
         <activity
             android:name="com.iwk.yang.activity.VideoPlayerActivity"

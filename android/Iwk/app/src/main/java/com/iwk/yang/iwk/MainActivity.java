@@ -23,6 +23,7 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapLabel;
 import com.iwk.yang.activity.LoginActivity;
 import com.iwk.yang.activity.UploadVideoActivity;
+import com.iwk.yang.activity.UserInfoActivity;
 import com.iwk.yang.activity.VideoListLoaderActivity;
 import com.iwk.yang.activity.XListViewActivity;
 import com.iwk.yang.impl.UserDaoImpl;
@@ -98,7 +99,10 @@ public class MainActivity extends AppCompatActivity
             index_name.setText(user.getName());
             user_nickname.setText(user.getName());
             user_introduce.setText(user.getIntroduce());
+            System.out.println("头像=="+user.getIcons());
+            MyVolley.getImage(getResources().getText(R.string.serverURL)+user.getIcons(),leftImageView);
             obj_id=user.getId().toString();
+
         }
 
     }
@@ -151,11 +155,13 @@ public class MainActivity extends AppCompatActivity
                 Intent mgIntent = new Intent(MainActivity.this, XListViewActivity.class);
                 Bundle bundle=new Bundle();
                 bundle.putString("obj_id",obj_id);
+
                 mgIntent.putExtras(bundle);
                 startActivity(mgIntent);
 
             } else if (id == R.id.nav_info) {
-                toastShow.makeText("" + id, Toast.LENGTH_LONG);
+                Intent infoIntent = new Intent(MainActivity.this, UserInfoActivity.class);
+                startActivity(infoIntent);
 
             }
 
@@ -239,7 +245,17 @@ public class MainActivity extends AppCompatActivity
             index_name.setText(bundle.getString("nickname"));
             user_nickname.setText(bundle.getString("nickname"));
             user_introduce.setText(bundle.getString("introduce"));
+            initData();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * activity重载
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
     }
 }

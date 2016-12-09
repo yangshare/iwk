@@ -1,6 +1,7 @@
 package com.iweike.action;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
+
+import sun.misc.BASE64Decoder;
 
 import com.iweike.daoimpl.Iwk_userDaoImpl;
 import com.iweike.daoimpl.Iwk_videoDaoImpl;
@@ -30,7 +33,7 @@ public class wUserAction extends ActionSupport {
 	// 1.前后台通信对象request，response
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = null;
-	
+
 	PrintWriter out = null;
 	Iwk_userDaoImpl userDao = new Iwk_userDaoImpl();
 	// 2.struts配置返回的json串，必须有set方法配套
@@ -49,6 +52,11 @@ public class wUserAction extends ActionSupport {
 	FileUploadTool fileUploadTool = new FileUploadTool();
 	private File image;
 	private String imageFileName;
+	private String terminalImage;// 终端（Android）图片
+
+	public void setTerminalImage(String terminalImage) {
+		this.terminalImage = terminalImage;
+	}
 
 	public void setImage(File image) {
 		this.image = image;
@@ -60,7 +68,7 @@ public class wUserAction extends ActionSupport {
 
 	// 4.用户信息
 	// Fields
-	private String user_id;//用户id
+	private String user_id;// 用户id
 	private String icons;// 头像
 
 	private String name;// 登陆名（昵称）
@@ -79,7 +87,6 @@ public class wUserAction extends ActionSupport {
 
 	// Property accessors
 
-	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -136,7 +143,6 @@ public class wUserAction extends ActionSupport {
 		this.introduce = introduce;
 	}
 
-
 	// 实例化Dao包
 	Iwk_videoDaoImpl videoDao = new Iwk_videoDaoImpl();
 	User user = null;
@@ -145,7 +151,7 @@ public class wUserAction extends ActionSupport {
 	public String addUser() {
 		user = new User();
 		try {
-			icons=uploadImg();
+			icons = uploadImg();
 			user.setIcons(icons.trim());// 头像
 
 			user.setId(userDao.queryLastRecordId() + 1);// 编号
@@ -162,13 +168,13 @@ public class wUserAction extends ActionSupport {
 			user.setSsex(ssex.trim());// 学生性别
 			user.setEmail(email.trim());// 邮箱
 			user.setIntroduce(introduce.trim());// 自我介绍
-			
-			if(userDao.save(user))
+
+			if (userDao.save(user))
 				return "regSuccess";
-			else{
-				response=ServletActionContext.getResponse();
+			else {
+				response = ServletActionContext.getResponse();
 				response.setHeader("Content-type", "text/html;charset=UTF-8");
-				out=response.getWriter();
+				out = response.getWriter();
 				out.print("alert('注册失败！请联系寻求帮助')");
 				return "regError";
 			}
@@ -211,24 +217,25 @@ public class wUserAction extends ActionSupport {
 	public String queryUserByName() {
 		user = new User();
 		try {
-			System.out.println("前台密码："+pwd+",前台昵称："+name);
-			user=userDao.queryUserByName(name);
-			
-			if(user!=null){
-				System.out.println("对象密码："+user.getPwd()+",前台密码："+pwd);
-				if(user.getPwd().equals(pwd))
+			System.out.println("前台密码：" + pwd + ",前台昵称：" + name);
+			user = userDao.queryUserByName(name);
+
+			if (user != null) {
+				System.out.println("对象密码：" + user.getPwd() + ",前台密码：" + pwd);
+				if (user.getPwd().equals(pwd))
 					this.jsonStr = JSONObject.fromObject(user).toString();
 				else
 					this.jsonStr = null;
-			}else
+			} else
 				this.jsonStr = null;
-			
+
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
 	}
+
 	// 5.获取所有用户信息
 	@SuppressWarnings("unchecked")
 	public String queryAllUser() {
@@ -241,12 +248,28 @@ public class wUserAction extends ActionSupport {
 			return ERROR;
 		}
 	}
-	
+
 	// 6.通过Id删除用户
 	public String deleteUserById() {
 		try {
-			this.jsonStr = ""
-					+ userDao.delect(Integer.parseInt(user_id));
+			this.jsonStr = "" + userDao.delect(Integer.parseInt(user_id));
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
+
+	// 7.修改对象
+	public String updateUser() {
+		user = userDao.query(Integer.parseInt(user_id));
+		try {
+			user.setIcons(terminalImage.trim());// 头像
+			user.setName(name.trim());// 登陆名（昵称）
+			user.setPwd(pwd.trim());// 登陆密码
+			user.setEmail(email.trim());// 邮箱
+			user.setIntroduce(introduce.trim());// 自我介绍
+			this.jsonStr = userDao.update(user) ? "用户修改成功" : "用户修改失败";
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -283,12 +306,34 @@ public class wUserAction extends ActionSupport {
 	public String uploadImg() {
 		String filePath = "";
 		if (image != null) {
-			filePath = fileUploadTool.uploadImg(image, imageFileName, "img/head");
+			filePath = fileUploadTool.uploadImg(image, imageFileName,
+					"img/head");
 		}
 
 		filePath = "upload/img/head/"
 				+ filePath.substring(filePath.lastIndexOf("\\") + 1);
 		return filePath;
+	}
+	
+	public String androiduploadImg() {
+		System.out.println("imageFileName=" + imageFileName);
+		String filePath = "";
+		if (terminalImage != null) {
+			// 对base64数据进行解码 生成 字节数组，不能直接用Base64.decode（）；进行解密
+			try {
+				byte[] photoimg = new BASE64Decoder()
+						.decodeBuffer(terminalImage);
+				filePath = fileUploadTool.uploadImg(photoimg, imageFileName,
+						"img/head");
+			} catch (IOException e) {
+				System.out.println("uploadImg的IOException：" + e.getMessage());
+				e.printStackTrace();
+			}
+		} 
+
+		this.jsonStr = "upload/img/head/"
+				+ filePath.substring(filePath.lastIndexOf("\\") + 1);
+		return SUCCESS;
 	}
 
 }

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <com.beardedhen.androidbootstrap.BootstrapWell
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <!--*******************选择封面-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.beardedhen.androidbootstrap.AwesomeTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                app:bootstrapBrand="info"
+                                app:fontAwesomeIcon="fa_image" />
+
+                            <com.beardedhen.androidbootstrap.BootstrapLabel
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:text="头像"
+                                android:textIsSelectable="true"
+                                app:bootstrapBrand="info"
+                                app:bootstrapHeading="h5"
+                                app:roundedCorners="true" />
+
+                        </LinearLayout>
+
+                        <com.beardedhen.androidbootstrap.BootstrapButton
+                            android:id="@+id/info_bt_img_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="选择图片"
+                            app:roundedCorners="true" />
+
+                        <com.beardedhen.androidbootstrap.BootstrapThumbnail
+                            android:id="@+id/info_tb_showUploadImg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_menu_camera"
+                            app:bootstrapBrand="info"
+                            app:hasBorder="true" />
+                    </LinearLayout>
+                    <!--分割线-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="#dfdddf" />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/info_bt_file_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="上传"
+                        app:bootstrapBrand="info"
+                        app:roundedCorners="true" />
+                </LinearLayout>
+            </com.beardedhen.androidbootstrap.BootstrapWell>
+
+            <!--*******************用户昵称-->
+            <com.beardedhen.androidbootstrap.BootstrapLabel
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="用户昵称"
+                app:bootstrapBrand="info"
+                app:bootstrapHeading="h5"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/info_et_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:hint="10字以内"
+                android:maxLength="10"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md"
+                app:roundedCorners="true" />
+            <!--*******************用户密码-->
+            <com.beardedhen.androidbootstrap.BootstrapLabel
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="用户密码"
+                app:bootstrapBrand="info"
+                app:bootstrapHeading="h5"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/info_et_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:hint="12字符以内"
+                android:maxLength="12"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md"
+                app:roundedCorners="true" />
+            <!--*******************用户邮箱-->
+            <com.beardedhen.androidbootstrap.BootstrapLabel
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="用户邮箱"
+                app:bootstrapBrand="info"
+                app:bootstrapHeading="h5"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/info_et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:hint="例：***@**.com"
+                android:inputType="textEmailAddress"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md"
+                app:roundedCorners="true" />
+
+            <!--*******************用户简介-->
+            <com.beardedhen.androidbootstrap.BootstrapLabel
+                android:id="@+id/info_bootstrapLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="用户简介"
+                app:bootstrapBrand="info"
+                app:bootstrapHeading="h5"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/info_et_introduce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:hint="字数限制50"
+                android:maxLength="50"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/info_bt_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="提交"
+                app:bootstrapBrand="regular"
+                app:roundedCorners="true" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/info_loading_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone" />
+    </RelativeLayout>
+</ScrollView>

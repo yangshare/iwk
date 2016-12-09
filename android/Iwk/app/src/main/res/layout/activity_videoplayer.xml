@@ -32,7 +32,7 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/imageviewboundshape" />
+                android:background="@drawable/imageviewboundshape"/>
 
             <ImageButton
                 android:id="@+id/ib_videoPlay"
@@ -57,38 +57,66 @@
                 <com.beardedhen.androidbootstrap.BootstrapLabel
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="简介："
                     app:bootstrapBrand="info"
                     app:bootstrapHeading="h5"
-                    app:roundedCorners="true"
-                    android:text="简介：" />
+                    app:roundedCorners="true" />
 
                 <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:id="@+id/tv_videoIntroduce"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="                 简介内容"
-                    />
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="                 简介内容" />
+
                 <com.beardedhen.androidbootstrap.BootstrapLabel
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="评论："
                     app:bootstrapBrand="info"
                     app:bootstrapHeading="h5"
-                    app:roundedCorners="true"
-                    android:text="评论：" />
+                    app:roundedCorners="true" />
 
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:id="@+id/tv_videoComments"
-                    android:layout_width="wrap_content"
+                <ListView
+                    android:id="@+id/lv_comment_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="                 评论"
-                    />
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                     />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:textIsSelectable="true"
+                        android:id="@+id/bt_comment_submit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BootstrapButton"
+                        app:bootstrapBrand="info"
+                        app:bootstrapSize="lg"
+                        app:bootstrapText="提交"
+                        app:buttonMode="regular"
+                        app:roundedCorners="true"
+                        app:showOutline="false" />
+
+                    <com.beardedhen.androidbootstrap.BootstrapEditText
+                        android:id="@+id/et_comment_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:hint="评论一下(50字内)"
+                        app:bootstrapBrand="info"
+                        app:bootstrapSize="lg"
+                        app:roundedCorners="true"
+                        android:maxLength="50"/>
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
 
 </LinearLayout>

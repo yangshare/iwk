@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.iweike.po.User;
+import com.iweike.tool.FileDeleteTool;
 
 public class Iwk_userDaoImpl {
 
@@ -13,6 +14,9 @@ public class Iwk_userDaoImpl {
 	// 1.通过id删除对象
 	public boolean delect(int id) {
 		user = new User();
+		user = query(id);
+		//删除视频
+		FileDeleteTool.deleteFile(user.getIcons());
 		return iwkDao.delete(id, user);
 	}
 
